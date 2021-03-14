@@ -1,9 +1,27 @@
 import requests
 from base64 import b64encode
-from pyawx.models.core import ApiUrl
 from pyawx.models.mixins import DataModelMixin
-from pyawx.models.utils import export, update, get_endpoint
+from pyawx.models.utils import get_endpoint
+from pyawx.actions import update, export, flush
 from pyawx.exceptions import UnauthorizedAccess, UnknownEndpoint
+
+
+class _ApiUrl:
+    def __init__(self, url):
+        if "/api/v2" in url:
+            url = url.replace("/api/v2", "")
+        self._url = url
+
+    def endpoint(self, endpoint):
+        endpoint = endpoint.strip()
+
+        if not endpoint.startswith("/"):
+            endpoint = f"/{endpoint}"
+
+        if not endpoint.endswith("/"):
+            endpoint = f"{endpoint}/"
+
+        return f"{self._url}{endpoint}"
 
 
 class Client:
@@ -27,7 +45,7 @@ class Client:
         :type token: str, optional if username and password supplied
         """
 
-        self.url = ApiUrl(url)
+        self.url = _ApiUrl(url)
         self._write_back = list()
 
         self._session = requests.Session()
@@ -56,6 +74,12 @@ class Client:
             raise UnauthorizedAccess
         elif _me.status_code == 404:
             raise UnknownEndpoint
+
+    def _get(self, model):
+        result = self._session.get(
+            self.url.endpoint(get_endpoint(model))
+        )
+        return result
 
     def _post(self, model):
         result = self._session.post(
@@ -97,9 +121,8 @@ class Client:
 
         items = list()
 
-        results = requests.get(
-            self.url.endpoint(get_endpoint(model)),
-            headers=self._headers
+        results = self._session.get(
+            self.url.endpoint(get_endpoint(model))
         )
 
         if results.status_code != 200:
@@ -140,9 +163,12 @@ class Client:
         """
 
         for model in self._write_back:
-            if model.is_changed:
-                self._put(model)
-            elif model.is_deleted:
+            if model.is_deleted:
                 self._delete(model)
+            elif model.is_changed:
+                self._put(model)
+                flush(model)
             else:
                 self._post(model)
+
+        self._write_back = list()

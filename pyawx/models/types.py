@@ -4,3 +4,4 @@ INTEGER = int
 STRING = str
 BOOLEAN = bool
 DATETIME = datetime
+JSON = dict
