@@ -1,8 +1,8 @@
 import requests
 from base64 import b64encode
 from pyawx.models.mixins import DataModelMixin
-from pyawx.models.utils import get_endpoint
-from pyawx.actions import update, export, flush
+from pyawx.models.utils import get_endpoint, update, flush
+from pyawx.actions import export
 from pyawx.exceptions import UnauthorizedAccess, UnknownEndpoint
 
 

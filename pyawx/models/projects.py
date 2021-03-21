@@ -51,13 +51,15 @@ class Project(DataModelMixin):
             :param custom_virtualenv: Local absolute file path containing a custom Python virtualenv to use
             :type custom_virtualenv: str, default ""
 
-        Read Only Arguments:
+        Read Only Attributes:
             :param id: Database ID for this project.
             :type id: int, readonly
             :param type: Data type for this project.
             :type type: str, readonly
             :param url: URL for this project.
             :type url: str, readonly
+            :param created: Timestamp when this project was created.
+            :type created: datetime, readonly
             :param modified: Timestamp when this project was last modified.
             :type modified: datetime, readonly
             :param last_job_run: Last time job ran
@@ -87,11 +89,6 @@ class Project(DataModelMixin):
             :type status: str, choice, readonly
         """
         super().__init__(**kwargs)
-
-    @property
-    def __internal__(self):
-        """Flag to indicate this was internally created object"""
-        return self._data.get("internal_")
 
     @property
     def id(self):

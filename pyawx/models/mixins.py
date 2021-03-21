@@ -15,6 +15,13 @@ class DataModelMixin:
     def __repr__(self):
         return f"<{self.__class__.__name__} object at {id(self)}>"
 
+    def __flush__(self):
+        """
+        Flush the object to reset any saved changes. Since its now saved to the server it should be reflected
+        in the model as well
+        """
+        self._changes = dict()
+
     def __export__(self):
         """
         Export of the model ojbect as a dict. This is a copy of the internal
@@ -34,6 +41,13 @@ class DataModelMixin:
     def is_changed(self):
         return True if self._changes else False
 
+    # TODO: need a cleaner way to define an internally created object vs a user created object
+    @property
+    def __internal__(self):
+        """Flag to indicate this was internally created object"""
+        return self._data.get("internal_", False)
+
+    @property
     def is_deleted(self):
         return self.__deleted__
 

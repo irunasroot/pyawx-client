@@ -42,18 +42,6 @@ def get_endpoint(model):
     return model.__endpoint__ if not model.id else f"{model.__endpoint__}/{model.id}"
 
 
-def delete(model):
-    """
-    Marks a record as deleted
-
-    :param model: The model
-    :type model: subclass of :class:`pyawx.models.mixins.DataModelMixin`
-    :return: none
-    """
-
-    model.__delete_record__()
-
-
 def update(model, data):
     """
     Updates a mode with the data provided. Usually comes from the AWX API
@@ -67,11 +55,11 @@ def update(model, data):
     model.__update__(**data)
 
 
-def export(model):
+def flush(model):
     """
-    Exports the data from a model as a dict
+    Flushes the model object to reset any flags after a change has been made to it
     :param model: The model
     :type model: subclass of :class:`pyawx.models.mixins.DataModelMixin`
-    :return: dict
+    :return: None
     """
-    model.__export__()
+    model.__flush__()
