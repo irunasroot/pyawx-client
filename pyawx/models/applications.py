@@ -171,7 +171,11 @@ class Application(DataModelMixin):
 
     @skip_authorization.setter
     def skip_authorization(self, value):
-        set_changes(self, "skip_authorization", value, types.BOOLEAN)
+        allowed_values = [
+            True,
+            False
+        ]
+        set_changes(self, "skip_authorization", value, types.BOOLEAN, allowed_values)
 
     @property
     def organization(self):

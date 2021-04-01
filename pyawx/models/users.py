@@ -122,7 +122,11 @@ class User(DataModelMixin):
 
     @is_superuser.setter
     def is_superuser(self, value):
-        set_changes(self, "is_superuser", value, types.BOOLEAN)
+        allowed_values = [
+            True,
+            False
+        ]
+        set_changes(self, "is_superuser", value, types.BOOLEAN, allowed_values)
 
     @property
     def is_system_auditor(self):
@@ -131,7 +135,11 @@ class User(DataModelMixin):
 
     @is_system_auditor.setter
     def is_system_auditor(self, value):
-        set_changes(self, "is_system_auditor", value, types.BOOLEAN)
+        allowed_values = [
+            True,
+            False
+        ]
+        set_changes(self, "is_system_auditor", value, types.BOOLEAN, allowed_values)
 
     @property
     def ldap_dn(self):
