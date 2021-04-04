@@ -4,48 +4,42 @@ from pyawx.models.utils import set_changes
 from pyawx.exceptions import ValueReadOnly
 
 
-class Organization(DataModelMixin):
-    __endpoint__ = "/api/v2/organizations"
+class Label(DataModelMixin):
+    __endpoint__ = "/api/v2/labels"
 
     def __init__(self, **kwargs):
         """
-        Organization List
+        Label List
 
         Attributes:
-            :param name: Name of this organization.
+            :param name: Name of this label.
             :type name: string, required, default ``
-            :param description: Optional description of this organization.
-            :type description: string, required, default ""
-            :param max_hosts: Maximum number of hosts allowed to be managed by this 
-                organization.
-            :type max_hosts: integer, required, default 0
-            :param custom_virtualenv: Local absolute file path containing a custom Python 
-                virtualenv to use
-            :type custom_virtualenv: string, required, default "None"
+            :param organization: Organization this label belongs to.
+            :type organization: id, required, default ``
 
         Read Only Attributes:
-            :param id: Database ID for this organization.
+            :param id: Database ID for this label.
             :type id: integer, readonly
-            :param type: Data type for this organization.
-                | organization: Organization
+            :param type: Data type for this label.
+                | label: Label
             :type type: choice, readonly
-            :param url: URL for this organization.
+            :param url: URL for this label.
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
             :param summary_fields: Data structure with name/description for related resources. 
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
-            :param created: Timestamp when this organization was created.
+            :param created: Timestamp when this label was created.
             :type created: datetime, readonly
-            :param modified: Timestamp when this organization was last modified.
+            :param modified: Timestamp when this label was last modified.
             :type modified: datetime, readonly
         """
         super().__init__(**kwargs)
     
     @property
     def id(self):
-        """Database ID for this organization."""
+        """Database ID for this label."""
         return self._data.get("id")
 
     @id.setter
@@ -54,7 +48,7 @@ class Organization(DataModelMixin):
 
     @property
     def type(self):
-        """Data type for this organization."""
+        """Data type for this label."""
         return self._data.get("type")
 
     @type.setter
@@ -63,7 +57,7 @@ class Organization(DataModelMixin):
 
     @property
     def url(self):
-        """URL for this organization."""
+        """URL for this label."""
         return self._data.get("url")
 
     @url.setter
@@ -91,7 +85,7 @@ class Organization(DataModelMixin):
 
     @property
     def created(self):
-        """Timestamp when this organization was created."""
+        """Timestamp when this label was created."""
         return self._data.get("created")
 
     @created.setter
@@ -100,7 +94,7 @@ class Organization(DataModelMixin):
 
     @property
     def modified(self):
-        """Timestamp when this organization was last modified."""
+        """Timestamp when this label was last modified."""
         return self._data.get("modified")
 
     @modified.setter
@@ -109,7 +103,7 @@ class Organization(DataModelMixin):
 
     @property
     def name(self):
-        """Name of this organization."""
+        """Name of this label."""
         return self._data.get("name")
 
     @name.setter
@@ -117,28 +111,10 @@ class Organization(DataModelMixin):
         set_changes(self, "name", value, types.STRING)
 
     @property
-    def description(self):
-        """Optional description of this organization."""
-        return self._data.get("description")
+    def organization(self):
+        """Organization this label belongs to."""
+        return self._data.get("organization")
 
-    @description.setter
-    def description(self, value):
-        set_changes(self, "description", value, types.STRING)
-
-    @property
-    def max_hosts(self):
-        """Maximum number of hosts allowed to be managed by this organization."""
-        return self._data.get("max_hosts")
-
-    @max_hosts.setter
-    def max_hosts(self, value):
-        set_changes(self, "max_hosts", value, types.INTEGER)
-
-    @property
-    def custom_virtualenv(self):
-        """Local absolute file path containing a custom Python virtualenv to use"""
-        return self._data.get("custom_virtualenv")
-
-    @custom_virtualenv.setter
-    def custom_virtualenv(self, value):
-        set_changes(self, "custom_virtualenv", value, types.STRING)
+    @organization.setter
+    def organization(self, value):
+        set_changes(self, "organization", value, types.ID)

@@ -9,6 +9,13 @@ Copyright (c) 2021, iRunAsRoot
 from pyawx.exceptions import ValueNotAllowed
 
 
+def _refactor_bool(value):
+    return {
+        "true": True,
+        "false": False
+    }[value.lower()]
+
+
 def set_changes(obj, key, value, value_type, limit=None):
     """
     Updates values within the object
@@ -26,8 +33,10 @@ def set_changes(obj, key, value, value_type, limit=None):
     if not isinstance(value, value_type):
         raise TypeError
 
-    obj._data[key] = value
-    obj._changes[key] = value
+    if value_type == bool:
+        value = _refactor_bool(value)
+
+    obj.__set_value__(key, value)
 
 
 def get_endpoint(model):

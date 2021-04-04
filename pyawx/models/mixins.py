@@ -37,9 +37,9 @@ class DataModelMixin:
         """
         self._data.update(data)
 
-    @property
-    def is_changed(self):
-        return True if self._changes else False
+    def __set_value__(self, key, value):
+        self._data[key] = value
+        self._changes[key] = [value]
 
     # TODO: need a cleaner way to define an internally created object vs a user created object
     @property
@@ -47,12 +47,16 @@ class DataModelMixin:
         """Flag to indicate this was internally created object"""
         return self._data.get("internal_", False)
 
+    def __delete_record__(self):
+        self.__deleted__ = True
+
+    @property
+    def is_changed(self):
+        return True if self._changes else False
+
     @property
     def is_deleted(self):
         return self.__deleted__
-
-    def __delete_record__(self):
-        self.__deleted__ = True
 
     def revert(self, attribute):
         """

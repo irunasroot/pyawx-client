@@ -9,64 +9,73 @@ class Inventory(DataModelMixin):
 
     def __init__(self, **kwargs):
         """
+        Inventory List
+
         Attributes:
-            :param name: Name of this inventory
-            :type name: str, required
+            :param name: Name of this inventory.
+            :type name: string, required, default ``
             :param description: Optional description of this inventory.
-            :type description: str, default ""
-            :param organization: Organization containing this application.
-            :type organization: int, required
+            :type description: string, required, default ""
+            :param organization: Organization containing this inventory.
+            :type organization: id, required, default ``
             :param kind: Kind of inventory being represented.
-            :type kind: choice, str
-                | "": Hosts have a direct link to this inventory.
+                | : Hosts have a direct link to this inventory.
                 | smart: Hosts for inventory generated using the host_filter property.
+            :type kind: choice, required, default ""
             :param host_filter: Filter that will be applied to the hosts of this inventory.
-            :type host_filter: str, Default ""
-            :param variables: Inventory variables in JSON format.
-            :type variables: json, Default ``
-            :param insights_credential: Credentials to be used by hosts belonging to
-                this inventory when accessing Red Hat Insights API.
-            :type insights_credential: int, default ``
+            :type host_filter: string, required, default "None"
+            :param variables: Inventory variables in JSON or YAML format.
+            :type variables: json, required, default ""
+            :param insights_credential: Credentials to be used by hosts belonging to this inventory 
+                when accessing Red Hat Insights API.
+            :type insights_credential: id, required, default ``
 
         Read Only Attributes:
             :param id: Database ID for this inventory.
-            :type id: int, readonly
+            :type id: integer, readonly
             :param type: Data type for this inventory.
-            :type type: str, readonly
+                | inventory: Inventory
+            :type type: choice, readonly
             :param url: URL for this inventory.
-            :type url: str, readonly
+            :type url: string, readonly
+            :param related: Data structure with URLs of related resources.
+            :type related: object, readonly
+            :param summary_fields: Data structure with name/description for related resources. 
+                 The output for some objects may be limited for performance
+            :type summary_fields: object, readonly
             :param created: Timestamp when this inventory was created.
             :type created: datetime, readonly
             :param modified: Timestamp when this inventory was last modified.
             :type modified: datetime, readonly
-            :param has_active_failures: This field is deprecated and will be removed in a future release.
-                Flag indicating whether any hosts in this inventory have failed.
-            :type has_active_failures: bool, readonly
-            :param total_hosts: This field is deprecated and will be removed in a future release.
-                Total number of hosts in this inventory.
-            :type total_hosts: int, readonly
-            :param hosts_with_active_failures: This field is deprecated and will be removed in a future release.
-                Number of hosts in this inventory with active failures.
-            :type hosts_with_active_failures: int, readonly
-            :param total_groups: This field is deprecated and will be removed in a future release.
-                Total number of groups in this inventory.
-            :type total_groups: int, readonly
-            :param has_inventory_sources: This field is deprecated and will be removed in a future release.
-                Flag indicating whether this inventory has any external inventory sources.
-            :type has_inventory_sources: bool, readonly
-            :param total_inventory_sources: Total number of external inventory sources configured within this inventory.
-            :type total_inventory_sources: int, readonly
-            :param inventory_sources_with_failures: Number of external inventory
-                sources in this inventory with failures.
-            :type inventory_sources_with_failures: int, readonly
+            :param has_active_failures: This field is deprecated and will be removed in a future 
+                release. Flag indicating whether any hosts in this
+            :type has_active_failures: boolean, readonly
+            :param total_hosts: This field is deprecated and will be removed in a future 
+                release. Total number of hosts in this inventory.
+            :type total_hosts: integer, readonly
+            :param hosts_with_active_failures: This field is deprecated and will be removed in a future 
+                release. Number of hosts in this inventory with active
+            :type hosts_with_active_failures: integer, readonly
+            :param total_groups: This field is deprecated and will be removed in a future 
+                release. Total number of groups in this inventory.
+            :type total_groups: integer, readonly
+            :param has_inventory_sources: This field is deprecated and will be removed in a future 
+                release. Flag indicating whether this inventory has any
+            :type has_inventory_sources: boolean, readonly
+            :param total_inventory_sources: Total number of external inventory sources configured 
+                within this inventory.
+            :type total_inventory_sources: integer, readonly
+            :param inventory_sources_with_failures: Number of external inventory sources in this inventory with 
+                failures.
+            :type inventory_sources_with_failures: integer, readonly
             :param pending_deletion: Flag indicating the inventory is being deleted.
-            :type pending_deletion: bool, readonly
+            :type pending_deletion: boolean, readonly
         """
         super().__init__(**kwargs)
-
+    
     @property
     def id(self):
-        """Database ID for this inventory. (integer)"""
+        """Database ID for this inventory."""
         return self._data.get("id")
 
     @id.setter
@@ -75,7 +84,7 @@ class Inventory(DataModelMixin):
 
     @property
     def type(self):
-        """Data type for this inventory. (choice)"""
+        """Data type for this inventory."""
         return self._data.get("type")
 
     @type.setter
@@ -84,7 +93,7 @@ class Inventory(DataModelMixin):
 
     @property
     def url(self):
-        """URL for this inventory. (string)"""
+        """URL for this inventory."""
         return self._data.get("url")
 
     @url.setter
@@ -92,8 +101,27 @@ class Inventory(DataModelMixin):
         raise ValueReadOnly
 
     @property
+    def related(self):
+        """Data structure with URLs of related resources."""
+        return self._data.get("related")
+
+    @related.setter
+    def related(self, value):
+        raise ValueReadOnly
+
+    @property
+    def summary_fields(self):
+        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        for performance reasons."""
+        return self._data.get("summary_fields")
+
+    @summary_fields.setter
+    def summary_fields(self, value):
+        raise ValueReadOnly
+
+    @property
     def created(self):
-        """Timestamp when this inventory was created. (datetime)"""
+        """Timestamp when this inventory was created."""
         return self._data.get("created")
 
     @created.setter
@@ -102,7 +130,7 @@ class Inventory(DataModelMixin):
 
     @property
     def modified(self):
-        """Timestamp when this inventory was last modified. (datetime)"""
+        """Timestamp when this inventory was last modified."""
         return self._data.get("modified")
 
     @modified.setter
@@ -111,7 +139,7 @@ class Inventory(DataModelMixin):
 
     @property
     def name(self):
-        """Name of this inventory. (string)"""
+        """Name of this inventory."""
         return self._data.get("name")
 
     @name.setter
@@ -120,7 +148,7 @@ class Inventory(DataModelMixin):
 
     @property
     def description(self):
-        """Optional description of this inventory. (string)"""
+        """Optional description of this inventory."""
         return self._data.get("description")
 
     @description.setter
@@ -129,16 +157,16 @@ class Inventory(DataModelMixin):
 
     @property
     def organization(self):
-        """Organization containing this application. (id)"""
+        """Organization containing this inventory."""
         return self._data.get("organization")
 
     @organization.setter
     def organization(self, value):
-        set_changes(self, "organization", value, types.INTEGER)
+        set_changes(self, "organization", value, types.ID)
 
     @property
     def kind(self):
-        """Kind of inventory being represented. (choice)"""
+        """Kind of inventory being represented."""
         return self._data.get("kind")
 
     @kind.setter
@@ -147,11 +175,11 @@ class Inventory(DataModelMixin):
             "",
             "smart"
         ]
-        set_changes(self, "kind", value, types.INTEGER, allowed_values)
+        set_changes(self, "kind", value, types.CHOICE, allowed_values)
 
     @property
     def host_filter(self):
-        """Filter that will be applied to the hosts of this inventory. (string)"""
+        """Filter that will be applied to the hosts of this inventory."""
         return self._data.get("host_filter")
 
     @host_filter.setter
@@ -160,7 +188,7 @@ class Inventory(DataModelMixin):
 
     @property
     def variables(self):
-        """Inventory variables in JSON format. (json)"""
+        """Inventory variables in JSON or YAML format."""
         return self._data.get("variables")
 
     @variables.setter
@@ -169,10 +197,8 @@ class Inventory(DataModelMixin):
 
     @property
     def has_active_failures(self):
-        """
-        This field is deprecated and will be removed in a future release.
-        Flag indicating whether any hosts in this inventory have failed. (boolean)
-        """
+        """This field is deprecated and will be removed in a future release. Flag indicating whether any hosts in 
+        this inventory have failed."""
         return self._data.get("has_active_failures")
 
     @has_active_failures.setter
@@ -181,10 +207,8 @@ class Inventory(DataModelMixin):
 
     @property
     def total_hosts(self):
-        """
-        This field is deprecated and will be removed in a future release.
-        Total number of hosts in this inventory. (integer)
-        """
+        """This field is deprecated and will be removed in a future release. Total number of hosts in this 
+        inventory."""
         return self._data.get("total_hosts")
 
     @total_hosts.setter
@@ -193,10 +217,8 @@ class Inventory(DataModelMixin):
 
     @property
     def hosts_with_active_failures(self):
-        """
-        This field is deprecated and will be removed in a future release.
-        Number of hosts in this inventory with active failures. (integer)
-        """
+        """This field is deprecated and will be removed in a future release. Number of hosts in this inventory with 
+        active failures."""
         return self._data.get("hosts_with_active_failures")
 
     @hosts_with_active_failures.setter
@@ -205,10 +227,8 @@ class Inventory(DataModelMixin):
 
     @property
     def total_groups(self):
-        """
-        This field is deprecated and will be removed in a future release.
-        Total number of groups in this inventory. (integer)
-        """
+        """This field is deprecated and will be removed in a future release. Total number of groups in this 
+        inventory."""
         return self._data.get("total_groups")
 
     @total_groups.setter
@@ -217,10 +237,8 @@ class Inventory(DataModelMixin):
 
     @property
     def has_inventory_sources(self):
-        """
-        This field is deprecated and will be removed in a future release.
-        Flag indicating whether this inventory has any external inventory sources. (boolean)
-        """
+        """This field is deprecated and will be removed in a future release. Flag indicating whether this inventory 
+        has any external inventory sources."""
         return self._data.get("has_inventory_sources")
 
     @has_inventory_sources.setter
@@ -229,7 +247,7 @@ class Inventory(DataModelMixin):
 
     @property
     def total_inventory_sources(self):
-        """Total number of external inventory sources configured within this inventory. (integer)"""
+        """Total number of external inventory sources configured within this inventory."""
         return self._data.get("total_inventory_sources")
 
     @total_inventory_sources.setter
@@ -238,7 +256,7 @@ class Inventory(DataModelMixin):
 
     @property
     def inventory_sources_with_failures(self):
-        """Number of external inventory sources in this inventory with failures. (integer)"""
+        """Number of external inventory sources in this inventory with failures."""
         return self._data.get("inventory_sources_with_failures")
 
     @inventory_sources_with_failures.setter
@@ -247,16 +265,16 @@ class Inventory(DataModelMixin):
 
     @property
     def insights_credential(self):
-        """Credentials to be used by hosts belonging to this inventory when accessing Red Hat Insights API. (id)"""
+        """Credentials to be used by hosts belonging to this inventory when accessing Red Hat Insights API."""
         return self._data.get("insights_credential")
 
     @insights_credential.setter
     def insights_credential(self, value):
-        set_changes(self, "insights_credential", value, types.INTEGER)
+        set_changes(self, "insights_credential", value, types.ID)
 
     @property
     def pending_deletion(self):
-        """Flag indicating the inventory is being deleted. (boolean)"""
+        """Flag indicating the inventory is being deleted."""
         return self._data.get("pending_deletion")
 
     @pending_deletion.setter
@@ -269,34 +287,42 @@ class InventoryScript(DataModelMixin):
 
     def __init__(self, **kwargs):
         """
+        Inventory Script List
+
         Attributes:
             :param name: Name of this custom inventory script.
-            :type name: str, required
+            :type name: string, required, default ``
             :param description: Optional description of this custom inventory script.
-            :type description: str, default ""
-            :param organization: Organization containing this application.
-            :type organization: int, required
+            :type description: string, required, default ""
             :param script: Script
-            :type script: str, required
+            :type script: string, required, default ``
+            :param organization: Organization owning this inventory script
+            :type organization: id, required, default ``
 
         Read Only Attributes:
             :param id: Database ID for this custom inventory script.
-            :type id: int, readonly
+            :type id: integer, readonly
             :param type: Data type for this custom inventory script.
-            :type type: str, readonly
+                | custom_inventory_script: Custom Inventory Script
+            :type type: choice, readonly
             :param url: URL for this custom inventory script.
-            :type url: str, readonly
+            :type url: string, readonly
+            :param related: Data structure with URLs of related resources.
+            :type related: object, readonly
+            :param summary_fields: Data structure with name/description for related resources. 
+                 The output for some objects may be limited for performance
+            :type summary_fields: object, readonly
             :param created: Timestamp when this custom inventory script was created.
             :type created: datetime, readonly
-            :param modified: Timestamp when this custom inventory script was last modified.
+            :param modified: Timestamp when this custom inventory script was last 
+                modified.
             :type modified: datetime, readonly
-
         """
         super().__init__(**kwargs)
-
+    
     @property
     def id(self):
-        """Database ID for this custom inventory script. (integer)"""
+        """Database ID for this custom inventory script."""
         return self._data.get("id")
 
     @id.setter
@@ -305,7 +331,7 @@ class InventoryScript(DataModelMixin):
 
     @property
     def type(self):
-        """Data type for this custom inventory script. (choice)"""
+        """Data type for this custom inventory script."""
         return self._data.get("type")
 
     @type.setter
@@ -314,7 +340,7 @@ class InventoryScript(DataModelMixin):
 
     @property
     def url(self):
-        """URL for this custom inventory script. (string)"""
+        """URL for this custom inventory script."""
         return self._data.get("url")
 
     @url.setter
@@ -322,8 +348,27 @@ class InventoryScript(DataModelMixin):
         raise ValueReadOnly
 
     @property
+    def related(self):
+        """Data structure with URLs of related resources."""
+        return self._data.get("related")
+
+    @related.setter
+    def related(self, value):
+        raise ValueReadOnly
+
+    @property
+    def summary_fields(self):
+        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        for performance reasons."""
+        return self._data.get("summary_fields")
+
+    @summary_fields.setter
+    def summary_fields(self, value):
+        raise ValueReadOnly
+
+    @property
     def created(self):
-        """Timestamp when this custom inventory script was created. (datetime)"""
+        """Timestamp when this custom inventory script was created."""
         return self._data.get("created")
 
     @created.setter
@@ -332,7 +377,7 @@ class InventoryScript(DataModelMixin):
 
     @property
     def modified(self):
-        """Timestamp when this custom inventory script was last modified. (datetime)"""
+        """Timestamp when this custom inventory script was last modified."""
         return self._data.get("modified")
 
     @modified.setter
@@ -341,7 +386,7 @@ class InventoryScript(DataModelMixin):
 
     @property
     def name(self):
-        """Name of this custom inventory script. (string)"""
+        """Name of this custom inventory script."""
         return self._data.get("name")
 
     @name.setter
@@ -350,7 +395,7 @@ class InventoryScript(DataModelMixin):
 
     @property
     def description(self):
-        """Optional description of this custom inventory script. (string)"""
+        """Optional description of this custom inventory script."""
         return self._data.get("description")
 
     @description.setter
@@ -358,22 +403,22 @@ class InventoryScript(DataModelMixin):
         set_changes(self, "description", value, types.STRING)
 
     @property
-    def organization(self):
-        """Organization owning this inventory script (id)"""
-        return self._data.get("organization")
-
-    @organization.setter
-    def organization(self, value):
-        set_changes(self, "organization", value, types.INTEGER)
-
-    @property
     def script(self):
-        """Script (string)"""
+        """Script"""
         return self._data.get("script")
 
     @script.setter
     def script(self, value):
         set_changes(self, "script", value, types.STRING)
+
+    @property
+    def organization(self):
+        """Organization owning this inventory script"""
+        return self._data.get("organization")
+
+    @organization.setter
+    def organization(self, value):
+        set_changes(self, "organization", value, types.ID)
 
 
 class InventorySource(DataModelMixin):
@@ -381,13 +426,14 @@ class InventorySource(DataModelMixin):
 
     def __init__(self, **kwargs):
         """
+        Inventory Source List
+
         Attributes:
-            :param name: Name of this custom inventory script.
-            :type name: str, required
-            :param description: Optional description of this custom inventory script.
-            :type description: str, default ""
-            :param source: Optional source of this custom inventory script.
-            :type source: str, choice, required
+            :param name: Name of this inventory source.
+            :type name: string, required, default ``
+            :param description: Optional description of this inventory source.
+            :type description: string, required, default ""
+            :param source: Source
                 | file: File, Directory or Script
                 | scm: Sourced from a Project
                 | ec2: Amazon EC2
@@ -399,66 +445,74 @@ class InventorySource(DataModelMixin):
                 | rhv: Red Hat Virtualization
                 | tower: Ansible Tower
                 | custom: Custom Script
+            :type source: choice, required, default "None"
             :param source_path: Source path
-            :type source_path: str, default ""
+            :type source_path: string, required, default ""
             :param source_script: Source script
-            :type source_script: int, default ``
-            :param source_vars: Inventory source variables in JSON format.
-            :type source_vars: str, default ""
+            :type source_script: id, required, default ``
+            :param source_vars: Inventory source variables in YAML or JSON format.
+            :type source_vars: string, required, default ""
             :param credential: Cloud credential to use for inventory updates.
-            :type credential: int, default None
-            :param enabled_var: Retrieve the enabled state from the given dict of host variables. The enabled
-                variable may be specified as "foo.bar", in which case the lookup will traverse into nested dicts,
-                equivalent to: from_dict.get("foo", {}).get("bar", default)
-            :type enabled_var: str, default ""
-            :param enabled_value: Only used when enabled_var is set. Value when the host is considered enabled.
-                For example if enabled_var="status.power_state"and enabled_value="powered_on" with host
-                variables:{ "status": { "power_state": "powered_on", "created": "2018-02-01T08:00:00.000000Z:00",
-                "healthy": true }, "name": "foobar", "ip_address": "192.168.2.1"}The host would be marked enabled.
-                If power_state where any value other than powered_on then the host would be disabled when imported
-                into Tower. If the key is not found then the host will be enabled
-            :type enabled_value: str, default ""
-            :param host_filter: Regex where only matching hosts will be imported into Tower.
-            :type host_filter: str, default ""
-            :param overwrite: Overwrite local groups and hosts from remote inventory source.
-            :type overwrite: bool, default False
+            :type credential: integer, required, default "None"
+            :param enabled_var: Retrieve the enabled state from the given dict of host 
+                variables. The enabled variable may be specified as 
+                neste
+            :type enabled_var: string, required, default ""
+            :param enabled_value: Only used when enabled_var is set. Value when the host is 
+                considered enabled. For example if 
+                _o
+            :type enabled_value: string, required, default ""
+            :param host_filter: Regex where only matching hosts will be imported into 
+                Tower.
+            :type host_filter: string, required, default ""
+            :param overwrite: Overwrite local groups and hosts from remote inventory 
+                source.
+            :type overwrite: boolean, required, default False
             :param overwrite_vars: Overwrite local variables from remote inventory source.
-            :type overwrite_vars: bool, default False
-            :param custom_virtualenv: Local absolute file path containing a custom Python virtualenv to use
-            :type custom_virtualenv: str, Default ""
-            :param timeout: The amount of time (in seconds) to run before the task is canceled.
-            :type timeout: int, Default 0
+            :type overwrite_vars: boolean, required, default False
+            :param custom_virtualenv: Local absolute file path containing a custom Python 
+                virtualenv to use
+            :type custom_virtualenv: string, required, default "None"
+            :param timeout: The amount of time (in seconds) to run before the task is 
+                canceled.
+            :type timeout: integer, required, default 0
             :param verbosity: Verbosity
                 | 0: 0 (WARNING)
                 | 1: 1 (INFO)
                 | 2: 2 (DEBUG)
-            :type verbosity: int, choice, Default 1
+            :type verbosity: choice, required, default 1
             :param inventory: Inventory
-            :type inventory: int, required
+            :type inventory: id, required, default ``
             :param update_on_launch: Update on launch
-            :type update_on_launch: bool, Default False
-            :param update_cache_timeout: Update Cache Timeout
-            :type update_cache_timeout: int, Default 0
+            :type update_on_launch: boolean, required, default False
+            :param update_cache_timeout: Update cache timeout
+            :type update_cache_timeout: integer, required, default 0
             :param source_project: Project containing inventory file used as source.
-            :type source_project: int, Default ``
+            :type source_project: id, required, default ``
             :param update_on_project_update: Update on project update
-            :type update_on_project_update: bool, Default False
+            :type update_on_project_update: boolean, required, default False
 
         Read Only Attributes:
             :param id: Database ID for this inventory source.
-            :type id: int, readonly
-            :param type: Data type for this inventory source
-            :type type: str, readonly
+            :type id: integer, readonly
+            :param type: Data type for this inventory source.
+                | inventory_source: Inventory Source
+            :type type: choice, readonly
             :param url: URL for this inventory source.
-            :type url: str, readonly
+            :type url: string, readonly
+            :param related: Data structure with URLs of related resources.
+            :type related: object, readonly
+            :param summary_fields: Data structure with name/description for related resources. 
+                 The output for some objects may be limited for performance
+            :type summary_fields: object, readonly
             :param created: Timestamp when this inventory source was created.
             :type created: datetime, readonly
-            :param modified: Optional description of this inventory source.
+            :param modified: Timestamp when this inventory source was last modified.
             :type modified: datetime, readonly
             :param last_job_run: Last job run
             :type last_job_run: datetime, readonly
             :param last_job_failed: Last job failed
-            :type last_jbo_failed: bool, readonly
+            :type last_job_failed: boolean, readonly
             :param next_job_run: Next job run
             :type next_job_run: datetime, readonly
             :param status: Status
@@ -472,17 +526,17 @@ class InventorySource(DataModelMixin):
                 | canceled: Canceled
                 | never updated: Never Updated
                 | none: No External Source
-            :type status: str, choice, readonly
+            :type status: choice, readonly
             :param last_update_failed: Last update failed
-            :type last_update_failed: bool, readonly
+            :type last_update_failed: boolean, readonly
             :param last_updated: Last updated
             :type last_updated: datetime, readonly
         """
         super().__init__(**kwargs)
-
+    
     @property
     def id(self):
-        """Database ID for this inventory source. (integer)"""
+        """Database ID for this inventory source."""
         return self._data.get("id")
 
     @id.setter
@@ -491,7 +545,7 @@ class InventorySource(DataModelMixin):
 
     @property
     def type(self):
-        """Data type for this inventory source. (choice)"""
+        """Data type for this inventory source."""
         return self._data.get("type")
 
     @type.setter
@@ -500,7 +554,7 @@ class InventorySource(DataModelMixin):
 
     @property
     def url(self):
-        """URL for this inventory source. (string)"""
+        """URL for this inventory source."""
         return self._data.get("url")
 
     @url.setter
@@ -508,8 +562,27 @@ class InventorySource(DataModelMixin):
         raise ValueReadOnly
 
     @property
+    def related(self):
+        """Data structure with URLs of related resources."""
+        return self._data.get("related")
+
+    @related.setter
+    def related(self, value):
+        raise ValueReadOnly
+
+    @property
+    def summary_fields(self):
+        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        for performance reasons."""
+        return self._data.get("summary_fields")
+
+    @summary_fields.setter
+    def summary_fields(self, value):
+        raise ValueReadOnly
+
+    @property
     def created(self):
-        """Timestamp when this inventory source was created. (datetime)"""
+        """Timestamp when this inventory source was created."""
         return self._data.get("created")
 
     @created.setter
@@ -518,7 +591,7 @@ class InventorySource(DataModelMixin):
 
     @property
     def modified(self):
-        """Timestamp when this inventory source was last modified. (datetime)"""
+        """Timestamp when this inventory source was last modified."""
         return self._data.get("modified")
 
     @modified.setter
@@ -527,7 +600,7 @@ class InventorySource(DataModelMixin):
 
     @property
     def name(self):
-        """Name of this inventory source. (string)"""
+        """Name of this inventory source."""
         return self._data.get("name")
 
     @name.setter
@@ -536,7 +609,7 @@ class InventorySource(DataModelMixin):
 
     @property
     def description(self):
-        """Optional description of this inventory source. (string)"""
+        """Optional description of this inventory source."""
         return self._data.get("description")
 
     @description.setter
@@ -545,7 +618,7 @@ class InventorySource(DataModelMixin):
 
     @property
     def source(self):
-        """Optional source of this inventory source. (string)"""
+        """Source"""
         return self._data.get("source")
 
     @source.setter
@@ -563,7 +636,7 @@ class InventorySource(DataModelMixin):
             "tower",
             "custom"
         ]
-        set_changes(self, "source", value, types.STRING, allowed_values)
+        set_changes(self, "source", value, types.CHOICE, allowed_values)
 
     @property
     def source_path(self):
@@ -581,11 +654,11 @@ class InventorySource(DataModelMixin):
 
     @source_script.setter
     def source_script(self, value):
-        set_changes(self, "source_script", value, types.INTEGER)
+        set_changes(self, "source_script", value, types.ID)
 
     @property
     def source_vars(self):
-        """Inventory source variables in JSON format. (string)"""
+        """Inventory source variables in YAML or JSON format."""
         return self._data.get("source_vars")
 
     @source_vars.setter
@@ -594,7 +667,7 @@ class InventorySource(DataModelMixin):
 
     @property
     def credential(self):
-        """Cloud credential to use for inventory updates. (integer)"""
+        """Cloud credential to use for inventory updates."""
         return self._data.get("credential")
 
     @credential.setter
@@ -603,10 +676,8 @@ class InventorySource(DataModelMixin):
 
     @property
     def enabled_var(self):
-        """
-        Retrieve the enabled state from the given dict of host variables. The enabled variable may be
-        specified as "foo.bar", in which case the lookup will traverse into nested dicts,
-        equivalent to: from_dict.get("foo", {}).get("bar", default) (string)
+        """Retrieve the enabled state from the given dict of host variables. The enabled variable may be specified 
+        as "foo.bar", in which case the lookup will traverse into nested dicts, equivalent to: 
         """
         return self._data.get("enabled_var")
 
@@ -616,13 +687,9 @@ class InventorySource(DataModelMixin):
 
     @property
     def enabled_value(self):
-        """
-        Only used when enabled_var is set. Value when the host is considered enabled. For example if
-        enabled_var="status.power_state"and enabled_value="powered_on" with host
-        variables:{ "status": { "power_state": "powered_on", "created": "2018-02-01T08:00:00.000000Z:00",
-        "healthy": true }, "name": "foobar", "ip_address": "192.168.2.1"}The host would be marked enabled.
-        If power_state where any value other than powered_on then the host would be disabled when imported into
-        Tower. If the key is not found then the host will be enabled (string)
+        """Only used when enabled_var is set. Value when the host is considered enabled. For example if 
+        enabled_var="status.power_state"and enabled_value="powered_on" with host variables:{   "status": {     
+           },    
         """
         return self._data.get("enabled_value")
 
@@ -632,7 +699,7 @@ class InventorySource(DataModelMixin):
 
     @property
     def host_filter(self):
-        """Regex where only matching hosts will be imported into Tower. (string)"""
+        """Regex where only matching hosts will be imported into Tower."""
         return self._data.get("host_filter")
 
     @host_filter.setter
@@ -641,33 +708,25 @@ class InventorySource(DataModelMixin):
 
     @property
     def overwrite(self):
-        """Overwrite local groups and hosts from remote inventory source. (boolean)"""
+        """Overwrite local groups and hosts from remote inventory source."""
         return self._data.get("overwrite")
 
     @overwrite.setter
     def overwrite(self, value):
-        allowed_values = [
-            True,
-            False
-        ]
-        set_changes(self, "overwrite", value, types.BOOLEAN, allowed_values)
+        set_changes(self, "overwrite", value, types.BOOLEAN)
 
     @property
     def overwrite_vars(self):
-        """Overwrite local variables from remote inventory source. (boolean)"""
+        """Overwrite local variables from remote inventory source."""
         return self._data.get("overwrite_vars")
 
     @overwrite_vars.setter
     def overwrite_vars(self, value):
-        allowed_values = [
-            True,
-            False
-        ]
-        set_changes(self, "overwrite_vars", value, types.BOOLEAN, allowed_values)
+        set_changes(self, "overwrite_vars", value, types.BOOLEAN)
 
     @property
     def custom_virtualenv(self):
-        """Local absolute file path containing a custom Python virtualenv to use (string)"""
+        """Local absolute file path containing a custom Python virtualenv to use"""
         return self._data.get("custom_virtualenv")
 
     @custom_virtualenv.setter
@@ -676,7 +735,7 @@ class InventorySource(DataModelMixin):
 
     @property
     def timeout(self):
-        """The amount of time (in seconds) to run before the task is canceled. (integer)"""
+        """The amount of time (in seconds) to run before the task is canceled."""
         return self._data.get("timeout")
 
     @timeout.setter
@@ -685,21 +744,21 @@ class InventorySource(DataModelMixin):
 
     @property
     def verbosity(self):
-        """Verbosity (integer)"""
+        """Verbosity"""
         return self._data.get("verbosity")
 
     @verbosity.setter
     def verbosity(self, value):
         allowed_values = [
-            0,
-            1,
-            2
+            "0",
+            "1",
+            "2"
         ]
-        set_changes(self, "verbosity", value, types.INTEGER, allowed_values)
+        set_changes(self, "verbosity", value, types.CHOICE, allowed_values)
 
     @property
     def last_job_run(self):
-        """Last job run (datetime)"""
+        """Last job run"""
         return self._data.get("last_job_run")
 
     @last_job_run.setter
@@ -708,7 +767,7 @@ class InventorySource(DataModelMixin):
 
     @property
     def last_job_failed(self):
-        """Last job failed (boolean)"""
+        """Last job failed"""
         return self._data.get("last_job_failed")
 
     @last_job_failed.setter
@@ -717,7 +776,7 @@ class InventorySource(DataModelMixin):
 
     @property
     def next_job_run(self):
-        """next job run (datetime)"""
+        """Next job run"""
         return self._data.get("next_job_run")
 
     @next_job_run.setter
@@ -726,7 +785,7 @@ class InventorySource(DataModelMixin):
 
     @property
     def status(self):
-        """Status (choice)"""
+        """Status"""
         return self._data.get("status")
 
     @status.setter
@@ -735,29 +794,25 @@ class InventorySource(DataModelMixin):
 
     @property
     def inventory(self):
-        """Inventory (id)"""
+        """Inventory"""
         return self._data.get("inventory")
 
     @inventory.setter
     def inventory(self, value):
-        set_changes(self, "inventory", value, types.INTEGER)
+        set_changes(self, "inventory", value, types.ID)
 
     @property
     def update_on_launch(self):
-        """Update on launce (boolean)"""
+        """Update on launch"""
         return self._data.get("update_on_launch")
 
     @update_on_launch.setter
     def update_on_launch(self, value):
-        allowed_values = [
-            True,
-            False
-        ]
-        set_changes(self, "update_on_launch", value, types.BOOLEAN, allowed_values)
+        set_changes(self, "update_on_launch", value, types.BOOLEAN)
 
     @property
     def update_cache_timeout(self):
-        """Update cache timeout (integer)"""
+        """Update cache timeout"""
         return self._data.get("update_cache_timeout")
 
     @update_cache_timeout.setter
@@ -766,29 +821,25 @@ class InventorySource(DataModelMixin):
 
     @property
     def source_project(self):
-        """Project containing inventory file used as source. (id)"""
+        """Project containing inventory file used as source."""
         return self._data.get("source_project")
 
     @source_project.setter
     def source_project(self, value):
-        set_changes(self, "source_project", value, types.INTEGER)
+        set_changes(self, "source_project", value, types.ID)
 
     @property
     def update_on_project_update(self):
-        """Update on project update (boolean)"""
+        """Update on project update"""
         return self._data.get("update_on_project_update")
 
     @update_on_project_update.setter
     def update_on_project_update(self, value):
-        allowed_values = [
-            True,
-            False
-        ]
-        set_changes(self, "update_on_project_update", value, types.BOOLEAN, allowed_values)
+        set_changes(self, "update_on_project_update", value, types.BOOLEAN)
 
     @property
     def last_update_failed(self):
-        """last update failed (boolean)"""
+        """Last update failed"""
         return self._data.get("last_update_failed")
 
     @last_update_failed.setter
@@ -797,7 +848,7 @@ class InventorySource(DataModelMixin):
 
     @property
     def last_updated(self):
-        """Last updated (datetime)"""
+        """Last updated"""
         return self._data.get("last_updated")
 
     @last_updated.setter
@@ -810,25 +861,32 @@ class InventoryUpdate(DataModelMixin):
 
     def __init__(self, **kwargs):
         """
+        Inventory Update List
+
         Read Only Attributes:
             :param id: Database ID for this inventory update.
-            :type id: int, readonly
+            :type id: integer, readonly
             :param type: Data type for this inventory update.
-            :type type: str, readonly
+                | inventory_update: Inventory Sync
+            :type type: choice, readonly
             :param url: URL for this inventory update.
-            :type url: str, readonly
+            :type url: string, readonly
+            :param related: Data structure with URLs of related resources.
+            :type related: object, readonly
+            :param summary_fields: Data structure with name/description for related resources. 
+                 The output for some objects may be limited for performance
+            :type summary_fields: object, readonly
             :param created: Timestamp when this inventory update was created.
             :type created: datetime, readonly
             :param modified: Timestamp when this inventory update was last modified.
             :type modified: datetime, readonly
             :param name: Name of this inventory update.
-            :type name: str, required
+            :type name: string, readonly
             :param description: Optional description of this inventory update.
-            :type description: str, default ""
-            :param unified_job_template: Unified job template
-            :type unified_job_template: int, readonly
+            :type description: string, readonly
+            :param unified_job_template: unified job template
+            :type unified_job_template: id, readonly
             :param launch_type: Launch type
-            :type launch_type: str, choice, readonly
                 | manual: Manual
                 | relaunch: Relaunch
                 | callback: Callback
@@ -838,18 +896,19 @@ class InventoryUpdate(DataModelMixin):
                 | webhook: Webhook
                 | sync: Sync
                 | scm: SCM Update
+            :type launch_type: choice, readonly
             :param status: Status
-            :type status: str choice, readonly
-                new: New
-                pending: Pending
-                waiting: Waiting
-                running: Running
-                successful: Successful
-                failed: Failed
-                error: Error
-                canceled: Canceled
+                | new: New
+                | pending: Pending
+                | waiting: Waiting
+                | running: Running
+                | successful: Successful
+                | failed: Failed
+                | error: Error
+                | canceled: Canceled
+            :type status: choice, readonly
             :param failed: Failed
-            :type failed: bool, readonly
+            :type failed: boolean, readonly
             :param started: The date and time the job was queued for starting.
             :type started: datetime, readonly
             :param finished: The date and time the job finished execution.
@@ -857,14 +916,13 @@ class InventoryUpdate(DataModelMixin):
             :param canceled_on: The date and time when the cancel request was sent.
             :type canceled_on: datetime, readonly
             :param elapsed: Elapsed time in seconds that the job ran.
-            :type elapsed: float, readonly
-            :param job_explanation: A status field to indicate the state of the job if it
-                wasn’t able to run and capture stdout
-            :type job_explanation: str, readonly
+            :type elapsed: decimal, readonly
+            :param job_explanation: A status field to indicate the state of the job if it 
+                wasn't able to run and capture stdout
+            :type job_explanation: string, readonly
             :param execution_node: The node the job executed on.
-            :type execution_node: str, readonly
+            :type execution_node: string, readonly
             :param source: Source
-            :type source: str, choice, readonly
                 | file: File, Directory or Script
                 | scm: Sourced from a Project
                 | ec2: Amazon EC2
@@ -876,57 +934,71 @@ class InventoryUpdate(DataModelMixin):
                 | rhv: Red Hat Virtualization
                 | tower: Ansible Tower
                 | custom: Custom Script
+            :type source: choice, readonly
             :param source_path: Source path
-            :type source_path: str, readonly
+            :type source_path: string, readonly
             :param source_script: Source script
-            :type source_script: int, readonly
-            :param source_vars: Inventory source variables in JSON format.
-            :type source_vars: str, readonly
+            :type source_script: id, readonly
+            :param source_vars: Inventory source variables in YAML or JSON format.
+            :type source_vars: string, readonly
             :param credential: Cloud credential to use for inventory updates.
-            :type credential: int, readonly
-            :param enabled_vars: Retrieve the enabled state from the given dict of host variables.
-                The enabled variable may be specified as "foo.bar", in which case the lookup will
-                traverse into nested dicts, equivalent to: from_dict.get("foo", {}).get("bar", default)
-            :type enabled_vars: str, readonly
-            :param enabled_value: Only used when enabled_var is set. Value when the host is considered
-                enabled. For example if enabled_var="status.power_state"and enabled_value="powered_on"
-                with host variables:{ "status": { "power_state": "powered_on", "created":
-                "2018-02-01T08:00:00.000000Z:00", "healthy": true }, "name": "foobar", "ip_address":
-                "192.168.2.1"}The host would be marked enabled. If power_state where any value other than
-                powered_on then the host would be disabled when imported into Tower. If the key is not
-                found then the host will be enabled
-            :type enabled_value: str, readonly
-            :param host_filter: Regex where only matching hosts will be imported into Tower.
-            :type host_filter: str, readonly
-            :param overwrite: Overwrite local groups and hosts from remote inventory source.
-            :type overwrite: bool, readonly
+            :type credential: integer, readonly
+            :param enabled_var: Retrieve the enabled state from the given dict of host 
+                variables. The enabled variable may be specified as 
+                neste
+            :type enabled_var: string, readonly
+            :param enabled_value: Only used when enabled_var is set. Value when the host is 
+                considered enabled. For example if 
+                _o
+            :type enabled_value: string, readonly
+            :param host_filter: Regex where only matching hosts will be imported into 
+                Tower.
+            :type host_filter: string, readonly
+            :param overwrite: Overwrite local groups and hosts from remote inventory 
+                source.
+            :type overwrite: boolean, readonly
             :param overwrite_vars: Overwrite local variables from remote inventory source.
-            :type overwrite_vars: bool, readonly
+            :type overwrite_vars: boolean, readonly
             :param custom_virtualenv: Custom virtualenv
-            :type custom_virtualenv: str, readonly
-            :param timeout: The amount of time (in seconds) to run before the task is canceled.
-            :type timeout: int, readonly
+            :type custom_virtualenv: string, readonly
+            :param timeout: The amount of time (in seconds) to run before the task is 
+                canceled.
+            :type timeout: integer, readonly
             :param verbosity: Verbosity
-            :type verbosity: int, choice, readonly
                 | 0: 0 (WARNING)
                 | 1: 1 (INFO)
                 | 2: 2 (DEBUG)
+            :type verbosity: choice, readonly
             :param inventory: Inventory
-            :type inventory: int, readonly
+            :type inventory: id, readonly
             :param inventory_source: Inventory source
-            :type inventory_source: int, readonly
+            :type inventory_source: id, readonly
             :param license_error: License error
-            :type license_error: bool, readonly
+            :type license_error: boolean, readonly
             :param org_host_limit_error: Org host limit error
-            :type org_host_limit_error: bool, readonly
-            :param source_project_update: Inventory files from this Project Update were used for the inventory update.
-            :type source_project_update: int, readonly
+            :type org_host_limit_error: boolean, readonly
+            :param source_project_update: Inventory files from this Project Update were used for the 
+                inventory update.
+            :type source_project_update: id, readonly
+            :param job_args: Job args
+            :type job_args: string, readonly
+            :param job_cwd: Job cwd
+            :type job_cwd: string, readonly
+            :param job_env: job_env
+            :type job_env: json, readonly
+            :param result_traceback: Result traceback
+            :type result_traceback: string, readonly
+            :param event_processing_finished: Indicates whether all of the events generated by this 
+                unified job have been saved to the database.
+            :type event_processing_finished: boolean, readonly
+            :param source_project: The project used for this job.
+            :type source_project: field, readonly
         """
         super().__init__(**kwargs)
-
+    
     @property
     def id(self):
-        """Database ID for this inventory update. (integer)"""
+        """Database ID for this inventory update."""
         return self._data.get("id")
 
     @id.setter
@@ -935,7 +1007,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def type(self):
-        """Data type for this inventory update. (choice)"""
+        """Data type for this inventory update."""
         return self._data.get("type")
 
     @type.setter
@@ -944,7 +1016,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def url(self):
-        """URL for this inventory update. (string)"""
+        """URL for this inventory update."""
         return self._data.get("url")
 
     @url.setter
@@ -952,8 +1024,27 @@ class InventoryUpdate(DataModelMixin):
         raise ValueReadOnly
 
     @property
+    def related(self):
+        """Data structure with URLs of related resources."""
+        return self._data.get("related")
+
+    @related.setter
+    def related(self, value):
+        raise ValueReadOnly
+
+    @property
+    def summary_fields(self):
+        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        for performance reasons."""
+        return self._data.get("summary_fields")
+
+    @summary_fields.setter
+    def summary_fields(self, value):
+        raise ValueReadOnly
+
+    @property
     def created(self):
-        """Timestamp when this inventory update was created. (datetime)"""
+        """Timestamp when this inventory update was created."""
         return self._data.get("created")
 
     @created.setter
@@ -962,7 +1053,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def modified(self):
-        """Timestamp when this inventory update was last modified. (datetime)"""
+        """Timestamp when this inventory update was last modified."""
         return self._data.get("modified")
 
     @modified.setter
@@ -971,7 +1062,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def name(self):
-        """Name of this inventory update. (string)"""
+        """Name of this inventory update."""
         return self._data.get("name")
 
     @name.setter
@@ -980,7 +1071,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def description(self):
-        """OOptional description of this inventory update. (string)"""
+        """Optional description of this inventory update."""
         return self._data.get("description")
 
     @description.setter
@@ -989,7 +1080,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def unified_job_template(self):
-        """Unified job template (id)"""
+        """unified job template"""
         return self._data.get("unified_job_template")
 
     @unified_job_template.setter
@@ -998,7 +1089,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def launch_type(self):
-        """Launch type (choice)"""
+        """Launch type"""
         return self._data.get("launch_type")
 
     @launch_type.setter
@@ -1007,7 +1098,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def status(self):
-        """Status (choice)"""
+        """Status"""
         return self._data.get("status")
 
     @status.setter
@@ -1016,7 +1107,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def failed(self):
-        """Failed (boolean)"""
+        """Failed"""
         return self._data.get("failed")
 
     @failed.setter
@@ -1025,7 +1116,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def started(self):
-        """The date and time the job was queued for starting. (datetime)"""
+        """The date and time the job was queued for starting."""
         return self._data.get("started")
 
     @started.setter
@@ -1034,7 +1125,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def finished(self):
-        """The date and time the job finished execution. (datetime)"""
+        """The date and time the job finished execution."""
         return self._data.get("finished")
 
     @finished.setter
@@ -1043,7 +1134,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def canceled_on(self):
-        """The date and time when the cancel request was sent. (datetime)"""
+        """The date and time when the cancel request was sent."""
         return self._data.get("canceled_on")
 
     @canceled_on.setter
@@ -1052,7 +1143,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def elapsed(self):
-        """Elapsed time in seconds that the job ran. (decimal)"""
+        """Elapsed time in seconds that the job ran."""
         return self._data.get("elapsed")
 
     @elapsed.setter
@@ -1061,7 +1152,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def job_explanation(self):
-        """A status field to indicate the state of the job if it wasn’t able to run and capture stdout (string)"""
+        """A status field to indicate the state of the job if it wasn't able to run and capture stdout"""
         return self._data.get("job_explanation")
 
     @job_explanation.setter
@@ -1070,7 +1161,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def execution_node(self):
-        """The node the job executed on. (string)"""
+        """The node the job executed on."""
         return self._data.get("execution_node")
 
     @execution_node.setter
@@ -1106,7 +1197,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def source_vars(self):
-        """Inventory source variables in YAML or JSON format. (string)"""
+        """Inventory source variables in YAML or JSON format."""
         return self._data.get("source_vars")
 
     @source_vars.setter
@@ -1115,7 +1206,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def credential(self):
-        """Cloud credential to use for inventory updates. (integer)"""
+        """Cloud credential to use for inventory updates."""
         return self._data.get("credential")
 
     @credential.setter
@@ -1124,10 +1215,8 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def enabled_var(self):
-        """
-        Retrieve the enabled state from the given dict of host variables. The enabled variable may be specified
-        as "foo.bar", in which case the lookup will traverse into nested dicts, equivalent to:
-        from_dict.get("foo", {}).get("bar", default) (string)
+        """Retrieve the enabled state from the given dict of host variables. The enabled variable may be specified 
+        as "foo.bar", in which case the lookup will traverse into nested dicts, equivalent to: 
         """
         return self._data.get("enabled_var")
 
@@ -1137,13 +1226,9 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def enabled_value(self):
-        """
-        Only used when enabled_var is set. Value when the host is considered enabled. For example if
-        enabled_var="status.power_state"and enabled_value="powered_on" with host variables:{ "status":
-        { "power_state": "powered_on", "created": "2018-02-01T08:00:00.000000Z:00", "healthy": true },
-        "name": "foobar", "ip_address": "192.168.2.1"}The host would be marked enabled. If power_state where
-        any value other than powered_on then the host would be disabled when imported into Tower. If the key
-        is not found then the host will be enabled (string)
+        """Only used when enabled_var is set. Value when the host is considered enabled. For example if 
+        enabled_var="status.power_state"and enabled_value="powered_on" with host variables:{   "status": {     
+           },    
         """
         return self._data.get("enabled_value")
 
@@ -1153,7 +1238,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def host_filter(self):
-        """Regex where only matching hosts will be imported into Tower. (string)"""
+        """Regex where only matching hosts will be imported into Tower."""
         return self._data.get("host_filter")
 
     @host_filter.setter
@@ -1162,7 +1247,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def overwrite(self):
-        """Overwrite local groups and hosts from remote inventory source. (boolean)"""
+        """Overwrite local groups and hosts from remote inventory source."""
         return self._data.get("overwrite")
 
     @overwrite.setter
@@ -1171,7 +1256,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def overwrite_vars(self):
-        """Overwrite local variables from remote inventory source. (boolean)"""
+        """Overwrite local variables from remote inventory source."""
         return self._data.get("overwrite_vars")
 
     @overwrite_vars.setter
@@ -1189,7 +1274,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def timeout(self):
-        """The amount of time (in seconds) to run before the task is canceled. (integer)"""
+        """The amount of time (in seconds) to run before the task is canceled."""
         return self._data.get("timeout")
 
     @timeout.setter
@@ -1243,11 +1328,65 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def source_project_update(self):
-        """Inventory files from this Project Update were used for the inventory update. (id)"""
+        """Inventory files from this Project Update were used for the inventory update."""
         return self._data.get("source_project_update")
 
     @source_project_update.setter
     def source_project_update(self, value):
+        raise ValueReadOnly
+
+    @property
+    def job_args(self):
+        """Job args"""
+        return self._data.get("job_args")
+
+    @job_args.setter
+    def job_args(self, value):
+        raise ValueReadOnly
+
+    @property
+    def job_cwd(self):
+        """Job cwd"""
+        return self._data.get("job_cwd")
+
+    @job_cwd.setter
+    def job_cwd(self, value):
+        raise ValueReadOnly
+
+    @property
+    def job_env(self):
+        """job_env"""
+        return self._data.get("job_env")
+
+    @job_env.setter
+    def job_env(self, value):
+        raise ValueReadOnly
+
+    @property
+    def result_traceback(self):
+        """Result traceback"""
+        return self._data.get("result_traceback")
+
+    @result_traceback.setter
+    def result_traceback(self, value):
+        raise ValueReadOnly
+
+    @property
+    def event_processing_finished(self):
+        """Indicates whether all of the events generated by this unified job have been saved to the database."""
+        return self._data.get("event_processing_finished")
+
+    @event_processing_finished.setter
+    def event_processing_finished(self, value):
+        raise ValueReadOnly
+
+    @property
+    def source_project(self):
+        """The project used for this job."""
+        return self._data.get("source_project")
+
+    @source_project.setter
+    def source_project(self, value):
         raise ValueReadOnly
 
 
@@ -1256,35 +1395,41 @@ class Group(DataModelMixin):
 
     def __init__(self, **kwargs):
         """
+        Group List
+
         Attributes:
             :param name: Name of this group.
-            :type name: str, required
+            :type name: string, required, default ``
             :param description: Optional description of this group.
-            :type description: str, default ""
-            :param organization: Organization containing this application.
-            :type organization: int, required
+            :type description: string, required, default ""
             :param inventory: Inventory
-            :type inventory: int, required
-            :param variables: Group variables in JSON format.
-            :type variables: str, Default ``
+            :type inventory: id, required, default ``
+            :param variables: Group variables in JSON or YAML format.
+            :type variables: json, required, default ""
 
         Read Only Attributes:
             :param id: Database ID for this group.
-            :type id: int, readonly
+            :type id: integer, readonly
             :param type: Data type for this group.
-            :type type: str, readonly
+                | group: Group
+            :type type: choice, readonly
             :param url: URL for this group.
-            :type url: str, readonly
+            :type url: string, readonly
+            :param related: Data structure with URLs of related resources.
+            :type related: object, readonly
+            :param summary_fields: Data structure with name/description for related resources. 
+                 The output for some objects may be limited for performance
+            :type summary_fields: object, readonly
             :param created: Timestamp when this group was created.
             :type created: datetime, readonly
             :param modified: Timestamp when this group was last modified.
             :type modified: datetime, readonly
         """
         super().__init__(**kwargs)
-
+    
     @property
     def id(self):
-        """Database ID for this group. (integer)"""
+        """Database ID for this group."""
         return self._data.get("id")
 
     @id.setter
@@ -1293,7 +1438,7 @@ class Group(DataModelMixin):
 
     @property
     def type(self):
-        """Data type for this group. (choice)"""
+        """Data type for this group."""
         return self._data.get("type")
 
     @type.setter
@@ -1302,7 +1447,7 @@ class Group(DataModelMixin):
 
     @property
     def url(self):
-        """URL for this group. (string)"""
+        """URL for this group."""
         return self._data.get("url")
 
     @url.setter
@@ -1310,8 +1455,27 @@ class Group(DataModelMixin):
         raise ValueReadOnly
 
     @property
+    def related(self):
+        """Data structure with URLs of related resources."""
+        return self._data.get("related")
+
+    @related.setter
+    def related(self, value):
+        raise ValueReadOnly
+
+    @property
+    def summary_fields(self):
+        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        for performance reasons."""
+        return self._data.get("summary_fields")
+
+    @summary_fields.setter
+    def summary_fields(self, value):
+        raise ValueReadOnly
+
+    @property
     def created(self):
-        """Timestamp when this group was created. (datetime)"""
+        """Timestamp when this group was created."""
         return self._data.get("created")
 
     @created.setter
@@ -1320,7 +1484,7 @@ class Group(DataModelMixin):
 
     @property
     def modified(self):
-        """Timestamp when this group was last modified. (datetime)"""
+        """Timestamp when this group was last modified."""
         return self._data.get("modified")
 
     @modified.setter
@@ -1329,7 +1493,7 @@ class Group(DataModelMixin):
 
     @property
     def name(self):
-        """Name of this group. (string)"""
+        """Name of this group."""
         return self._data.get("name")
 
     @name.setter
@@ -1338,7 +1502,7 @@ class Group(DataModelMixin):
 
     @property
     def description(self):
-        """Optional description of this group. (string)"""
+        """Optional description of this group."""
         return self._data.get("description")
 
     @description.setter
@@ -1347,21 +1511,21 @@ class Group(DataModelMixin):
 
     @property
     def inventory(self):
-        """Inventory (id)"""
+        """Inventory"""
         return self._data.get("inventory")
 
     @inventory.setter
     def inventory(self, value):
-        set_changes(self, "inventory", value, types.STRING)
+        set_changes(self, "inventory", value, types.ID)
 
     @property
     def variables(self):
-        """Group variables in JSON format. (json)"""
+        """Group variables in JSON or YAML format."""
         return self._data.get("variables")
 
     @variables.setter
     def variables(self, value):
-        set_changes(self, "variables", value, types.STRING)
+        set_changes(self, "variables", value, types.JSON)
 
 
 class Host(DataModelMixin):
@@ -1369,51 +1533,58 @@ class Host(DataModelMixin):
 
     def __init__(self, **kwargs):
         """
+        Host List
+
         Attributes:
             :param name: Name of this host.
-            :type name: str, required
+            :type name: string, required, default ``
             :param description: Optional description of this host.
-            :type description: str, default ""
-            :param organization: Organization containing this application.
-            :type organization: int, required
+            :type description: string, required, default ""
             :param inventory: Inventory
-            :type inventory: int, required
+            :type inventory: id, required, default ``
             :param enabled: Is this host online and available for running jobs?
-            :type enabled: bool, Default True
-            :param instance_id: The value used by the remote inventory source to uniquely identify the host
-            :type instance_id: str, Default ""
-            :param variables: Host variables in JSON format
-            :type variables: str, Default ``
+            :type enabled: boolean, required, default True
+            :param instance_id: The value used by the remote inventory source to uniquely 
+                identify the host
+            :type instance_id: string, required, default ""
+            :param variables: Host variables in JSON or YAML format.
+            :type variables: json, required, default ""
 
         Read Only Attributes:
             :param id: Database ID for this host.
-            :type id: int, readonly
+            :type id: integer, readonly
             :param type: Data type for this host.
-            :type type: str, readonly
+                | host: Host
+            :type type: choice, readonly
             :param url: URL for this host.
-            :type url: str, readonly
+            :type url: string, readonly
+            :param related: Data structure with URLs of related resources.
+            :type related: object, readonly
+            :param summary_fields: Data structure with name/description for related resources. 
+                 The output for some objects may be limited for performance
+            :type summary_fields: object, readonly
             :param created: Timestamp when this host was created.
             :type created: datetime, readonly
             :param modified: Timestamp when this host was last modified.
             :type modified: datetime, readonly
-            :param has_active_failures: has active failures
-            :type has_active_failures: str, readonly
+            :param has_active_failures: Has active failures
+            :type has_active_failures: field, readonly
             :param has_inventory_sources: Has inventory sources
-            :type has_inventory_sources: str, readonly
-            :param last_job; Last job
-            :type last_job: int, readonly
-            :param last_job_host_summary: Las job host summary
-            :type last_job_host_summary: int, readonly
+            :type has_inventory_sources: field, readonly
+            :param last_job: Last job
+            :type last_job: id, readonly
+            :param last_job_host_summary: Last job host summary
+            :type last_job_host_summary: id, readonly
             :param insights_system_id: Red Hat Insights host unique identifier.
-            :type insights_system_id: str, readonly
+            :type insights_system_id: string, readonly
             :param ansible_facts_modified: The date and time ansible_facts was last modified.
             :type ansible_facts_modified: datetime, readonly
         """
         super().__init__(**kwargs)
-
+    
     @property
     def id(self):
-        """Database ID for this host. (integer)"""
+        """Database ID for this host."""
         return self._data.get("id")
 
     @id.setter
@@ -1422,7 +1593,7 @@ class Host(DataModelMixin):
 
     @property
     def type(self):
-        """Data type for this host. (choice)"""
+        """Data type for this host."""
         return self._data.get("type")
 
     @type.setter
@@ -1431,7 +1602,7 @@ class Host(DataModelMixin):
 
     @property
     def url(self):
-        """URL for this host. (string)"""
+        """URL for this host."""
         return self._data.get("url")
 
     @url.setter
@@ -1439,8 +1610,27 @@ class Host(DataModelMixin):
         raise ValueReadOnly
 
     @property
+    def related(self):
+        """Data structure with URLs of related resources."""
+        return self._data.get("related")
+
+    @related.setter
+    def related(self, value):
+        raise ValueReadOnly
+
+    @property
+    def summary_fields(self):
+        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        for performance reasons."""
+        return self._data.get("summary_fields")
+
+    @summary_fields.setter
+    def summary_fields(self, value):
+        raise ValueReadOnly
+
+    @property
     def created(self):
-        """Timestamp when this host was created. (datetime)"""
+        """Timestamp when this host was created."""
         return self._data.get("created")
 
     @created.setter
@@ -1449,7 +1639,7 @@ class Host(DataModelMixin):
 
     @property
     def modified(self):
-        """Timestamp when this host was last modified. (datetime)"""
+        """Timestamp when this host was last modified."""
         return self._data.get("modified")
 
     @modified.setter
@@ -1458,7 +1648,7 @@ class Host(DataModelMixin):
 
     @property
     def name(self):
-        """Name of this host. (string)"""
+        """Name of this host."""
         return self._data.get("name")
 
     @name.setter
@@ -1467,7 +1657,7 @@ class Host(DataModelMixin):
 
     @property
     def description(self):
-        """Optional description of this host. (string)"""
+        """Optional description of this host."""
         return self._data.get("description")
 
     @description.setter
@@ -1476,25 +1666,25 @@ class Host(DataModelMixin):
 
     @property
     def inventory(self):
-        """Inventory (id)"""
+        """Inventory"""
         return self._data.get("inventory")
 
     @inventory.setter
     def inventory(self, value):
-        set_changes(self, "inventory", value, types.STRING)
+        set_changes(self, "inventory", value, types.ID)
 
     @property
     def enabled(self):
-        """Is this host online and available for running jobs? (boolean)"""
+        """Is this host online and available for running jobs?"""
         return self._data.get("enabled")
 
     @enabled.setter
     def enabled(self, value):
-        set_changes(self, "enabled", value, types.STRING)
+        set_changes(self, "enabled", value, types.BOOLEAN)
 
     @property
     def instance_id(self):
-        """The value used by the remote inventory source to uniquely identify the host (string)"""
+        """The value used by the remote inventory source to uniquely identify the host"""
         return self._data.get("instance_id")
 
     @instance_id.setter
@@ -1503,16 +1693,16 @@ class Host(DataModelMixin):
 
     @property
     def variables(self):
-        """Host variables in JSON format. (json)"""
+        """Host variables in JSON or YAML format."""
         return self._data.get("variables")
 
     @variables.setter
     def variables(self, value):
-        set_changes(self, "variables", value, types.STRING)
+        set_changes(self, "variables", value, types.JSON)
 
     @property
     def has_active_failures(self):
-        """Has active failures (field)"""
+        """Has active failures"""
         return self._data.get("has_active_failures")
 
     @has_active_failures.setter
@@ -1521,7 +1711,7 @@ class Host(DataModelMixin):
 
     @property
     def has_inventory_sources(self):
-        """Has inventory sources (field)"""
+        """Has inventory sources"""
         return self._data.get("has_inventory_sources")
 
     @has_inventory_sources.setter
@@ -1530,7 +1720,7 @@ class Host(DataModelMixin):
 
     @property
     def last_job(self):
-        """Las job (id)"""
+        """Last job"""
         return self._data.get("last_job")
 
     @last_job.setter
@@ -1539,7 +1729,7 @@ class Host(DataModelMixin):
 
     @property
     def last_job_host_summary(self):
-        """Las job history summary (id)"""
+        """Last job host summary"""
         return self._data.get("last_job_host_summary")
 
     @last_job_host_summary.setter
@@ -1548,7 +1738,7 @@ class Host(DataModelMixin):
 
     @property
     def insights_system_id(self):
-        """Red Hat Insights host unique identifier. (string)"""
+        """Red Hat Insights host unique identifier."""
         return self._data.get("insights_system_id")
 
     @insights_system_id.setter
@@ -1557,7 +1747,7 @@ class Host(DataModelMixin):
 
     @property
     def ansible_facts_modified(self):
-        """Timestamp when this host was last ansible_facts_modified. (datetime)"""
+        """The date and time ansible_facts was last modified."""
         return self._data.get("ansible_facts_modified")
 
     @ansible_facts_modified.setter

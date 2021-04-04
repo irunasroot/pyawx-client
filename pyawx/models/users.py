@@ -9,43 +9,51 @@ class User(DataModelMixin):
 
     def __init__(self, **kwargs):
         """
-        Attributes:
-            :param username: Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-            :type username: str, required
-            :param first_name: First name
-            :type first_name: str, default ""
-            :param last_name: Last name
-            :type last_name: str, default ""
-            :param email: Email
-            :type email: str, default ""
-            :param is_superuser: Designates that this user has all permissions without explicitly assigning them.
-            :type is_superuser: bool, default False
+        User List
 
-        Write Only Attributes
-            :param password: Write-only field used to change the password. (string, default="")
-            :type password: str, writeonly
+        Attributes:
+            :param username: Required. 150 characters or fewer. Letters, digits and 
+                @/./+/-/_ only.
+            :type username: string, required, default ``
+            :param first_name: First name
+            :type first_name: string, required, default ``
+            :param last_name: Last name
+            :type last_name: string, required, default ``
+            :param email: Email address
+            :type email: string, required, default ``
+            :param is_superuser: Designates that this user has all permissions without 
+                explicitly assigning them.
+            :type is_superuser: boolean, required, default False
+            :param is_system_auditor: Is system auditor
+            :type is_system_auditor: boolean, required, default False
 
         Read Only Attributes:
             :param id: Database ID for this user.
-            :type id: int, readonly
+            :type id: integer, readonly
             :param type: Data type for this user.
-            :type type: str, readonly
+                | user: User
+            :type type: choice, readonly
             :param url: URL for this user.
-            :type url: str, readonly
+            :type url: string, readonly
+            :param related: Data structure with URLs of related resources.
+            :type related: object, readonly
+            :param summary_fields: Data structure with name/description for related resources. 
+                 The output for some objects may be limited for performance
+            :type summary_fields: object, readonly
             :param created: Timestamp when this user was created.
             :type created: datetime, readonly
-            :param ldap_dn: LDAP dn
-            :type ldap_dn: str, readonly
+            :param ldap_dn: Ldap dn
+            :type ldap_dn: string, readonly
             :param last_login: Last login
             :type last_login: datetime, readonly
             :param external_account: Set if the account is managed by an external service
-            :type external_account: str, readonly
+            :type external_account: field, readonly
         """
         super().__init__(**kwargs)
-
+    
     @property
     def id(self):
-        """Database ID for this user. (integer)"""
+        """Database ID for this user."""
         return self._data.get("id")
 
     @id.setter
@@ -54,7 +62,7 @@ class User(DataModelMixin):
 
     @property
     def type(self):
-        """Data type for this user. (choice)"""
+        """Data type for this user."""
         return self._data.get("type")
 
     @type.setter
@@ -63,7 +71,7 @@ class User(DataModelMixin):
 
     @property
     def url(self):
-        """URL for this user. (string)"""
+        """URL for this user."""
         return self._data.get("url")
 
     @url.setter
@@ -71,8 +79,27 @@ class User(DataModelMixin):
         raise ValueReadOnly
 
     @property
+    def related(self):
+        """Data structure with URLs of related resources."""
+        return self._data.get("related")
+
+    @related.setter
+    def related(self, value):
+        raise ValueReadOnly
+
+    @property
+    def summary_fields(self):
+        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        for performance reasons."""
+        return self._data.get("summary_fields")
+
+    @summary_fields.setter
+    def summary_fields(self, value):
+        raise ValueReadOnly
+
+    @property
     def created(self):
-        """Timestamp when this user was created. (datetime)"""
+        """Timestamp when this user was created."""
         return self._data.get("created")
 
     @created.setter
@@ -81,7 +108,7 @@ class User(DataModelMixin):
 
     @property
     def username(self):
-        """Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. (string)"""
+        """Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."""
         return self._data.get("username")
 
     @username.setter
@@ -90,7 +117,7 @@ class User(DataModelMixin):
 
     @property
     def first_name(self):
-        """Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. (string)"""
+        """First name"""
         return self._data.get("first_name")
 
     @first_name.setter
@@ -99,7 +126,7 @@ class User(DataModelMixin):
 
     @property
     def last_name(self):
-        """Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. (string)"""
+        """Last name"""
         return self._data.get("last_name")
 
     @last_name.setter
@@ -108,7 +135,7 @@ class User(DataModelMixin):
 
     @property
     def email(self):
-        """Email"""
+        """Email address"""
         return self._data.get("email")
 
     @email.setter
@@ -117,33 +144,25 @@ class User(DataModelMixin):
 
     @property
     def is_superuser(self):
-        """Designates that this user has all permissions without explicitly assigning them. (boolean)"""
+        """Designates that this user has all permissions without explicitly assigning them."""
         return self._data.get("is_superuser")
 
     @is_superuser.setter
     def is_superuser(self, value):
-        allowed_values = [
-            True,
-            False
-        ]
-        set_changes(self, "is_superuser", value, types.BOOLEAN, allowed_values)
+        set_changes(self, "is_superuser", value, types.BOOLEAN)
 
     @property
     def is_system_auditor(self):
-        """User is system auditor (boolean)"""
+        """Is system auditor"""
         return self._data.get("is_system_auditor")
 
     @is_system_auditor.setter
     def is_system_auditor(self, value):
-        allowed_values = [
-            True,
-            False
-        ]
-        set_changes(self, "is_system_auditor", value, types.BOOLEAN, allowed_values)
+        set_changes(self, "is_system_auditor", value, types.BOOLEAN)
 
     @property
     def ldap_dn(self):
-        """Designates that this user has all permissions without explicitly assigning them. (boolean)"""
+        """Ldap dn"""
         return self._data.get("ldap_dn")
 
     @ldap_dn.setter
@@ -152,7 +171,7 @@ class User(DataModelMixin):
 
     @property
     def last_login(self):
-        """Last login (datetime)"""
+        """Last login"""
         return self._data.get("last_login")
 
     @last_login.setter
@@ -161,21 +180,12 @@ class User(DataModelMixin):
 
     @property
     def external_account(self):
-        """Set if the account is managed by an external service (field)"""
+        """Set if the account is managed by an external service"""
         return self._data.get("external_account")
 
     @external_account.setter
     def external_account(self, value):
         raise ValueReadOnly
-
-    @property
-    def password(self):
-        """Write-only field used to change the password. (string)"""
-        return self._data.get("password")
-
-    @password.setter
-    def password(self, value):
-        set_changes(self, "password", value, types.STRING)
 
 
 class Team(DataModelMixin):
@@ -183,31 +193,39 @@ class Team(DataModelMixin):
 
     def __init__(self, **kwargs):
         """
+        Team List
+
         Attributes:
-            :param name: Name of this team
-            :type name: str, required
-            :param description: Optional description of this team. (string)
-            :type description: str, default ""
-            :param organization: Optional description of this team. (string)
-            :type organization: int, required
+            :param name: Name of this team.
+            :type name: string, required, default ``
+            :param description: Optional description of this team.
+            :type description: string, required, default ""
+            :param organization: Organization
+            :type organization: id, required, default ``
 
         Read Only Attributes:
             :param id: Database ID for this team.
-            :type id: int, readonly
+            :type id: integer, readonly
             :param type: Data type for this team.
-            :type type: str, readonly
+                | team: Team
+            :type type: choice, readonly
             :param url: URL for this team.
-            :type url: str, readonly
+            :type url: string, readonly
+            :param related: Data structure with URLs of related resources.
+            :type related: object, readonly
+            :param summary_fields: Data structure with name/description for related resources. 
+                 The output for some objects may be limited for performance
+            :type summary_fields: object, readonly
             :param created: Timestamp when this team was created.
             :type created: datetime, readonly
             :param modified: Timestamp when this team was last modified.
             :type modified: datetime, readonly
         """
         super().__init__(**kwargs)
-
+    
     @property
     def id(self):
-        """Database ID for this team. (integer)"""
+        """Database ID for this team."""
         return self._data.get("id")
 
     @id.setter
@@ -216,7 +234,7 @@ class Team(DataModelMixin):
 
     @property
     def type(self):
-        """Data type for this team. (choice)"""
+        """Data type for this team."""
         return self._data.get("type")
 
     @type.setter
@@ -225,7 +243,7 @@ class Team(DataModelMixin):
 
     @property
     def url(self):
-        """URL for this team. (string)"""
+        """URL for this team."""
         return self._data.get("url")
 
     @url.setter
@@ -233,8 +251,27 @@ class Team(DataModelMixin):
         raise ValueReadOnly
 
     @property
+    def related(self):
+        """Data structure with URLs of related resources."""
+        return self._data.get("related")
+
+    @related.setter
+    def related(self, value):
+        raise ValueReadOnly
+
+    @property
+    def summary_fields(self):
+        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        for performance reasons."""
+        return self._data.get("summary_fields")
+
+    @summary_fields.setter
+    def summary_fields(self, value):
+        raise ValueReadOnly
+
+    @property
     def created(self):
-        """Timestamp when this team was created. (datetime)"""
+        """Timestamp when this team was created."""
         return self._data.get("created")
 
     @created.setter
@@ -243,7 +280,7 @@ class Team(DataModelMixin):
 
     @property
     def modified(self):
-        """Timestamp when this team was last modified. (datetime)"""
+        """Timestamp when this team was last modified."""
         return self._data.get("modified")
 
     @modified.setter
@@ -252,7 +289,7 @@ class Team(DataModelMixin):
 
     @property
     def name(self):
-        """Name of this team. (string)"""
+        """Name of this team."""
         return self._data.get("name")
 
     @name.setter
@@ -261,7 +298,7 @@ class Team(DataModelMixin):
 
     @property
     def description(self):
-        """Optional description of this team. (string)"""
+        """Optional description of this team."""
         return self._data.get("description")
 
     @description.setter
@@ -270,9 +307,101 @@ class Team(DataModelMixin):
 
     @property
     def organization(self):
-        """Optional description of this team. (string)"""
+        """Organization"""
         return self._data.get("organization")
 
     @organization.setter
     def organization(self, value):
-        set_changes(self, "organization", value, types.INTEGER)
+        set_changes(self, "organization", value, types.ID)
+
+
+class Role(DataModelMixin):
+    __endpoint__ = "/api/v2/roles"
+
+    def __init__(self, **kwargs):
+        """
+        Role List
+
+        Read Only Attributes:
+            :param id: Database ID for this role.
+            :type id: integer, readonly
+            :param type: Data type for this role.
+                | role: Role
+            :type type: choice, readonly
+            :param url: URL for this role.
+            :type url: string, readonly
+            :param related: Data structure with URLs of related resources.
+            :type related: object, readonly
+            :param summary_fields: Data structure with name/description for related resources. 
+                 The output for some objects may be limited for performance
+            :type summary_fields: object, readonly
+            :param name: Name of this role.
+            :type name: field, readonly
+            :param description: Optional description of this role.
+            :type description: field, readonly
+        """
+        super().__init__(**kwargs)
+    
+    @property
+    def id(self):
+        """Database ID for this role."""
+        return self._data.get("id")
+
+    @id.setter
+    def id(self, value):
+        raise ValueReadOnly
+
+    @property
+    def type(self):
+        """Data type for this role."""
+        return self._data.get("type")
+
+    @type.setter
+    def type(self, value):
+        raise ValueReadOnly
+
+    @property
+    def url(self):
+        """URL for this role."""
+        return self._data.get("url")
+
+    @url.setter
+    def url(self, value):
+        raise ValueReadOnly
+
+    @property
+    def related(self):
+        """Data structure with URLs of related resources."""
+        return self._data.get("related")
+
+    @related.setter
+    def related(self, value):
+        raise ValueReadOnly
+
+    @property
+    def summary_fields(self):
+        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        for performance reasons."""
+        return self._data.get("summary_fields")
+
+    @summary_fields.setter
+    def summary_fields(self, value):
+        raise ValueReadOnly
+
+    @property
+    def name(self):
+        """Name of this role."""
+        return self._data.get("name")
+
+    @name.setter
+    def name(self, value):
+        raise ValueReadOnly
+
+    @property
+    def description(self):
+        """Optional description of this role."""
+        return self._data.get("description")
+
+    @description.setter
+    def description(self, value):
+        raise ValueReadOnly
