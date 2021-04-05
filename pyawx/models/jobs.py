@@ -4,7 +4,7 @@ from pyawx.models.utils import set_changes
 from pyawx.exceptions import ValueReadOnly
 
 
-class JobTemplates(DataModelMixin):
+class JobTemplate(DataModelMixin):
     __endpoint__ = "/api/v2/job_templates"
 
     def __init__(self, **kwargs):

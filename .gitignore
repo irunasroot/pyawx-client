@@ -81,6 +81,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
+build-classes/
 develop-eggs/
 dist/
 downloads/
