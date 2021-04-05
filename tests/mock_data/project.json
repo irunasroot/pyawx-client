@@ -1,0 +1,92 @@
+{
+  "id": 10,
+  "type": "project",
+  "url": "/api/v2/projects/10/",
+  "related": {
+    "named_url": "/api/v2/projects/test123++/",
+    "created_by": "/api/v2/users/1/",
+    "modified_by": "/api/v2/users/1/",
+    "teams": "/api/v2/projects/10/teams/",
+    "playbooks": "/api/v2/projects/10/playbooks/",
+    "inventory_files": "/api/v2/projects/10/inventories/",
+    "update": "/api/v2/projects/10/update/",
+    "project_updates": "/api/v2/projects/10/project_updates/",
+    "scm_inventory_sources": "/api/v2/projects/10/scm_inventory_sources/",
+    "schedules": "/api/v2/projects/10/schedules/",
+    "activity_stream": "/api/v2/projects/10/activity_stream/",
+    "notification_templates_started": "/api/v2/projects/10/notification_templates_started/",
+    "notification_templates_success": "/api/v2/projects/10/notification_templates_success/",
+    "notification_templates_error": "/api/v2/projects/10/notification_templates_error/",
+    "access_list": "/api/v2/projects/10/access_list/",
+    "object_roles": "/api/v2/projects/10/object_roles/",
+    "copy": "/api/v2/projects/10/copy/"
+  },
+  "summary_fields": {
+    "created_by": {
+      "id": 1,
+      "username": "admin",
+      "first_name": "",
+      "last_name": ""
+    },
+    "modified_by": {
+      "id": 1,
+      "username": "admin",
+      "first_name": "",
+      "last_name": ""
+    },
+    "object_roles": {
+      "admin_role": {
+        "description": "Can manage all aspects of the project",
+        "name": "Admin",
+        "id": 41
+      },
+      "use_role": {
+        "description": "Can use the project in a job template",
+        "name": "Use",
+        "id": 42
+      },
+      "update_role": {
+        "description": "May update the project",
+        "name": "Update",
+        "id": 43
+      },
+      "read_role": {
+        "description": "May view settings for the project",
+        "name": "Read",
+        "id": 44
+      }
+    },
+    "user_capabilities": {
+      "edit": true,
+      "delete": true,
+      "start": false,
+      "schedule": false,
+      "copy": false
+    }
+  },
+  "created": "2021-03-02T05:29:13.564395Z",
+  "modified": "2021-03-02T05:29:13.564459Z",
+  "name": "test123",
+  "description": "",
+  "local_path": "",
+  "scm_type": "",
+  "scm_url": "",
+  "scm_branch": "",
+  "scm_refspec": "",
+  "scm_clean": false,
+  "scm_delete_on_update": false,
+  "credential": null,
+  "timeout": 0,
+  "scm_revision": "",
+  "last_job_run": null,
+  "last_job_failed": false,
+  "next_job_run": null,
+  "status": "missing",
+  "organization": null,
+  "scm_update_on_launch": false,
+  "scm_update_cache_timeout": 0,
+  "allow_override": false,
+  "custom_virtualenv": null,
+  "last_update_failed": false,
+  "last_updated": null
+}
