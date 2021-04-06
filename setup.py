@@ -16,7 +16,7 @@ setup(
     author="Dennis Whitney",
     author_email="dennis@irunasroot.com",
     url="https://github.com/irunasroot/pyawx-client",
-    download_url="https://github.com/irunasroot/pyawx-client/archive/v0.1.1.tar.gz",
+    download_url="https://github.com/irunasroot/pyawx-client/archive/v0.2.0.tar.gz",
     keywords=["ansible", "tower", "awx", "redhat", "ansible tower", "ansible awx", "playbook", "automation"],
     install_requires=[
         "requests"
@@ -26,6 +26,9 @@ setup(
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Build Tools",
         "License :: OSI Approved :: Apache Software License",
-        "Programming Language :: Python :: 3.6"
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9"
     ]
 )
