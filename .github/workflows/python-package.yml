@@ -38,5 +38,4 @@ jobs:
     - name: Test with pytest
       run: |
         export PYTHONPATH=.
-        cd tests
         pytest
