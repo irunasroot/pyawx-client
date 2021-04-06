@@ -1,6 +1,4 @@
-from pyawx.models import types
-from pyawx.models.mixins import DataModelMixin
-from pyawx.models.utils import set_changes
+from pyawx.models._mixins import DataModelMixin
 from pyawx.exceptions import ValueReadOnly
 
 

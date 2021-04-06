@@ -1,8 +1,7 @@
 import requests
 from base64 import b64encode
-from pyawx.models.mixins import DataModelMixin
+from pyawx.models import DataModelMixin
 from pyawx.models.utils import get_endpoint, update, flush
-from pyawx.actions import export
 from pyawx.exceptions import UnauthorizedAccess, UnknownEndpoint
 
 
@@ -84,7 +83,7 @@ class Client:
     def _post(self, model):
         result = self._session.post(
             self.url.endpoint(f"{model.__endpoint__}"),
-            json=export(model)
+            json=model.export()
         )
         status_code = result.status_code
         result = result.json()
@@ -172,3 +171,15 @@ class Client:
                 self._post(model)
 
         self._write_back = list()
+
+    def delete(self, model):
+        """
+        Marks a record as deleted
+
+        :param model: The model
+        :type model: subclass of :class:`pyawx.models.mixins.DataModelMixin`
+        :return: model
+        """
+
+        model.__delete_record__()
+        self.add(model)

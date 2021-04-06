@@ -5,7 +5,6 @@ from requests import Session
 from tests.patching.api import get_api_client, load_model
 
 from pyawx.models.projects import Project
-from pyawx.actions import delete
 
 
 class TestApi(unittest.TestCase):
@@ -58,7 +57,7 @@ class TestApi(unittest.TestCase):
             mock_delete.return_value = Mock(
                 status_code=200
             )
-            api.add(delete(new_project))
+            api.delete(new_project)
             self.assertTrue(new_project.is_deleted)
             api.commit()
 

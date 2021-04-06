@@ -1,6 +1,8 @@
 # pyawx-client
 A python library for interacting with Ansible AWX instances
 
+![Unittest - master](https://github.com/irunasroot/pyawx-client/workflows/Python%20package/badge.svg?branch=master)
+
 # Installation
 You can install from pypi using pip
 ``bash
@@ -41,14 +43,12 @@ client.commit()
 Delete a job template
 ```python
 from pyawx import Client
-from pyawx.actions import delete
 from pyawx.models.jobs import JobTemplate
 
 client = Client("https://awx.mycompany.com", username="me", password="password")
 
 job_template = client.get_data(JobTemplate)[0]
 
-delete(job_template)
-client.add(job_template)
+client.delete(job_template)
 client.commit()
 ```
