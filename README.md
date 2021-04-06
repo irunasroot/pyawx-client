@@ -41,14 +41,12 @@ client.commit()
 Delete a job template
 ```python
 from pyawx import Client
-from pyawx.actions import delete
 from pyawx.models.jobs import JobTemplate
 
 client = Client("https://awx.mycompany.com", username="me", password="password")
 
 job_template = client.get_data(JobTemplate)[0]
 
-delete(job_template)
-client.add(job_template)
+client.delete(job_template)
 client.commit()
 ```

@@ -69,3 +69,11 @@ class DataModelMixin:
         if attribute in self._changes:
             self._data[attribute] = self._changes.get(attribute)
             del self._changes[attribute]
+
+    def export(self):
+        """
+        Exports the data from the model as a dict
+
+        :return: dict
+        """
+        return self.__export__()

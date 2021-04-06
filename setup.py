@@ -1,12 +1,14 @@
 from setuptools import setup
 
+from pyawx import __version__ as version
+
 with open("README.md", "r") as md:
     long_description = md.read()
 
 setup(
     name="pyawx-client",
     packages=["pyawx", "pyawx.models", "pyawx.exceptions"],
-    version="0.1.1",
+    version=version,
     license="Apache 2.0",
     description="Python API to access Ansible AWX/Tower v2 API",
     long_description=long_description,
