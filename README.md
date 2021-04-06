@@ -1,6 +1,8 @@
 # pyawx-client
 A python library for interacting with Ansible AWX instances
 
+![Unittest - master](https://github.com/irunasroot/pyawx-client/workflows/Python%20package/badge.svg?branch=master)
+
 # Installation
 You can install from pypi using pip
 ``bash
