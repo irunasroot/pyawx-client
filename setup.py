@@ -7,7 +7,7 @@ with open("README.md", "r") as md:
 
 setup(
     name="pyawx-client",
-    packages=["pyawx", "pyawx.models", "pyawx.exceptions"],
+    packages=["pyawx", "pyawx.models", "pyawx.models.utils", "pyawx.exceptions"],
     version=version,
     license="Apache 2.0",
     description="Python API to access Ansible AWX/Tower v2 API",
