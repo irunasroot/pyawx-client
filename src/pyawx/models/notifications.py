@@ -1,6 +1,6 @@
-from pyawx.models._mixins import DataModelMixin
-from pyawx.models.utils import set_changes, types
 from pyawx.exceptions import ValueReadOnly
+from pyawx.models.mixins import DataModelMixin
+from pyawx.models.utils import set_changes, types
 
 
 class NotificationTemplate(DataModelMixin):
@@ -31,7 +31,8 @@ class NotificationTemplate(DataModelMixin):
             :param notification_configuration: Notification configuration
             :type notification_configuration: json, required, default "{}"
             :param messages: Optional custom messages for notification template.
-            :type messages: json, required, default "{'started': None, 'success': None, 'error': None, 'workflow_approval': None}"
+            :type messages: json, required, default "{'started': None, 'success': None, 'error': None,
+                'workflow_approval': None}"
 
         Read Only Attributes:
             :param id: Database ID for this notification template.
@@ -43,17 +44,17 @@ class NotificationTemplate(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this notification template was created.
             :type created: datetime, readonly
-            :param modified: Timestamp when this notification template was last 
+            :param modified: Timestamp when this notification template was last
                 modified.
             :type modified: datetime, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this notification template."""
@@ -92,7 +93,7 @@ class NotificationTemplate(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -161,7 +162,7 @@ class NotificationTemplate(DataModelMixin):
             "rocketchat",
             "slack",
             "twilio",
-            "webhook"
+            "webhook",
         ]
         set_changes(self, "notification_type", value, types.CHOICE, allowed_values)
 
@@ -201,7 +202,7 @@ class Notification(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this notification was created.
@@ -238,7 +239,7 @@ class Notification(DataModelMixin):
             :type body: json, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this notification."""
@@ -277,7 +278,7 @@ class Notification(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 

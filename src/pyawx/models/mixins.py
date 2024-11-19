@@ -1,10 +1,13 @@
 from copy import deepcopy
 
+from pyawx.client_cache import get_client
+
 
 class DataModelMixin:
     """
     Base data model structure
     """
+
     __deleted__ = False
 
     def __init__(self, **kwargs):
@@ -24,7 +27,7 @@ class DataModelMixin:
 
     def __export__(self):
         """
-        Export of the model ojbect as a dict. This is a copy of the internal
+        Export of the model object as a dict. This is a copy of the internal
         tracking dict as to prevent model changes
         """
         return deepcopy(self._data)
@@ -77,3 +80,10 @@ class DataModelMixin:
         :return: dict
         """
         return self.__export__()
+
+    @classmethod
+    def get(cls):
+        client = get_client()
+
+        items = client.get_data(cls)
+        return items

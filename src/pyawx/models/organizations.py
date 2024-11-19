@@ -1,6 +1,6 @@
-from pyawx.models._mixins import DataModelMixin
-from pyawx.models.utils import set_changes, types
 from pyawx.exceptions import ValueReadOnly
+from pyawx.models.mixins import DataModelMixin
+from pyawx.models.utils import set_changes, types
 
 
 class Organization(DataModelMixin):
@@ -15,10 +15,10 @@ class Organization(DataModelMixin):
             :type name: string, required, default ``
             :param description: Optional description of this organization.
             :type description: string, required, default ""
-            :param max_hosts: Maximum number of hosts allowed to be managed by this 
+            :param max_hosts: Maximum number of hosts allowed to be managed by this
                 organization.
             :type max_hosts: integer, required, default 0
-            :param custom_virtualenv: Local absolute file path containing a custom Python 
+            :param custom_virtualenv: Local absolute file path containing a custom Python
                 virtualenv to use
             :type custom_virtualenv: string, required, default "None"
 
@@ -32,7 +32,7 @@ class Organization(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this organization was created.
@@ -41,7 +41,7 @@ class Organization(DataModelMixin):
             :type modified: datetime, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this organization."""
@@ -80,7 +80,7 @@ class Organization(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 

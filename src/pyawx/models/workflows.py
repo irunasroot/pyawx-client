@@ -1,6 +1,6 @@
-from pyawx.models._mixins import DataModelMixin
-from pyawx.models.utils import set_changes, types
 from pyawx.exceptions import ValueReadOnly
+from pyawx.models.mixins import DataModelMixin
+from pyawx.models.utils import set_changes, types
 
 
 class WorkflowJobTemplate(DataModelMixin):
@@ -25,7 +25,7 @@ class WorkflowJobTemplate(DataModelMixin):
             :type allow_simultaneous: boolean, required, default False
             :param ask_variables_on_launch: Ask variables on launch
             :type ask_variables_on_launch: boolean, required, default False
-            :param inventory: Inventory applied as a prompt, assuming job template 
+            :param inventory: Inventory applied as a prompt, assuming job template
                 prompts for inventory
             :type inventory: id, required, default ``
             :param limit: Limit
@@ -43,7 +43,7 @@ class WorkflowJobTemplate(DataModelMixin):
                 | github: GitHub
                 | gitlab: GitLab
             :type webhook_service: choice, required, default ``
-            :param webhook_credential: Personal Access Token for posting back the status to the 
+            :param webhook_credential: Personal Access Token for posting back the status to the
                 service API
             :type webhook_credential: id, required, default ``
 
@@ -57,12 +57,12 @@ class WorkflowJobTemplate(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this workflow job template was created.
             :type created: datetime, readonly
-            :param modified: Timestamp when this workflow job template was last 
+            :param modified: Timestamp when this workflow job template was last
                 modified.
             :type modified: datetime, readonly
             :param last_job_run: Last job run
@@ -88,7 +88,7 @@ class WorkflowJobTemplate(DataModelMixin):
             :type status: choice, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this workflow job template."""
@@ -127,7 +127,7 @@ class WorkflowJobTemplate(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -313,11 +313,7 @@ class WorkflowJobTemplate(DataModelMixin):
 
     @webhook_service.setter
     def webhook_service(self, value):
-        allowed_values = [
-            "",
-            "github",
-            "gitlab"
-        ]
+        allowed_values = ["", "github", "gitlab"]
         set_changes(self, "webhook_service", value, types.CHOICE, allowed_values)
 
     @property
@@ -347,7 +343,7 @@ class WorkflowJob(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this workflow job was created.
@@ -391,7 +387,7 @@ class WorkflowJob(DataModelMixin):
             :type canceled_on: datetime, readonly
             :param elapsed: Elapsed time in seconds that the job ran.
             :type elapsed: decimal, readonly
-            :param job_explanation: A status field to indicate the state of the job if it 
+            :param job_explanation: A status field to indicate the state of the job if it
                 wasn't able to run and capture stdout
             :type job_explanation: string, readonly
             :param workflow_job_template: Workflow job template
@@ -400,12 +396,12 @@ class WorkflowJob(DataModelMixin):
             :type extra_vars: json, readonly
             :param allow_simultaneous: Allow simultaneous
             :type allow_simultaneous: boolean, readonly
-            :param job_template: If automatically created for a sliced job run, the job 
+            :param job_template: If automatically created for a sliced job run, the job
                 template the workflow job was created from.
             :type job_template: id, readonly
             :param is_sliced_job: Is sliced job
             :type is_sliced_job: boolean, readonly
-            :param inventory: Inventory applied as a prompt, assuming job template 
+            :param inventory: Inventory applied as a prompt, assuming job template
                 prompts for inventory
             :type inventory: id, readonly
             :param limit: Limit
@@ -417,7 +413,7 @@ class WorkflowJob(DataModelMixin):
                 | github: GitHub
                 | gitlab: GitLab
             :type webhook_service: choice, readonly
-            :param webhook_credential: Personal Access Token for posting back the status to the 
+            :param webhook_credential: Personal Access Token for posting back the status to the
                 service API
             :type webhook_credential: id, readonly
             :param webhook_guid: Unique identifier of the event that triggered this webhook
@@ -432,7 +428,7 @@ class WorkflowJob(DataModelMixin):
             :type result_traceback: string, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this workflow job."""
@@ -471,7 +467,7 @@ class WorkflowJob(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -755,7 +751,7 @@ class WorkflowApproval(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this workflow approval was created.
@@ -795,7 +791,7 @@ class WorkflowApproval(DataModelMixin):
             :type canceled_on: datetime, readonly
             :param elapsed: Elapsed time in seconds that the job ran.
             :type elapsed: decimal, readonly
-            :param job_explanation: A status field to indicate the state of the job if it 
+            :param job_explanation: A status field to indicate the state of the job if it
                 wasn't able to run and capture stdout
             :type job_explanation: string, readonly
             :param can_approve_or_deny: Can approve or deny
@@ -812,12 +808,12 @@ class WorkflowApproval(DataModelMixin):
             :type job_env: json, readonly
             :param result_traceback: Result traceback
             :type result_traceback: string, readonly
-            :param event_processing_finished: Indicates whether all of the events generated by this 
+            :param event_processing_finished: Indicates whether all of the events generated by this
                 unified job have been saved to the database.
             :type event_processing_finished: boolean, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this workflow approval."""
@@ -856,7 +852,7 @@ class WorkflowApproval(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -1064,7 +1060,7 @@ class WorkflowJobTemplateNode(DataModelMixin):
         Attributes:
             :param extra_data: Extra data
             :type extra_data: json, required, default "{}"
-            :param inventory: Inventory applied as a prompt, assuming job template 
+            :param inventory: Inventory applied as a prompt, assuming job template
                 prompts for inventory
             :type inventory: id, required, default ``
             :param scm_branch: Scm branch
@@ -1096,10 +1092,10 @@ class WorkflowJobTemplateNode(DataModelMixin):
             :type workflow_job_template: id, required, default ``
             :param unified_job_template: Unified job template
             :type unified_job_template: id, required, default ``
-            :param all_parents_must_converge: If enabled then the node will only run if all of the parent 
+            :param all_parents_must_converge: If enabled then the node will only run if all of the parent
                 nodes have met the criteria to reach this node
             :type all_parents_must_converge: boolean, required, default False
-            :param identifier: An identifier for this node that is unique within its 
+            :param identifier: An identifier for this node that is unique within its
                 workflow. It is copied to workflow job nodes corresponding
             :type identifier: string, required, default "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
@@ -1113,12 +1109,12 @@ class WorkflowJobTemplateNode(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this workflow job template node was created.
             :type created: datetime, readonly
-            :param modified: Timestamp when this workflow job template node was last 
+            :param modified: Timestamp when this workflow job template node was last
                 modified.
             :type modified: datetime, readonly
             :param success_nodes: Success nodes
@@ -1129,7 +1125,7 @@ class WorkflowJobTemplateNode(DataModelMixin):
             :type always_nodes: field, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this workflow job template node."""
@@ -1168,7 +1164,7 @@ class WorkflowJobTemplateNode(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -1228,12 +1224,7 @@ class WorkflowJobTemplateNode(DataModelMixin):
 
     @job_type.setter
     def job_type(self, value):
-        allowed_values = [
-            "None",
-            "",
-            "run",
-            "check"
-        ]
+        allowed_values = ["None", "", "run", "check"]
         set_changes(self, "job_type", value, types.CHOICE, allowed_values)
 
     @property
@@ -1279,15 +1270,7 @@ class WorkflowJobTemplateNode(DataModelMixin):
 
     @verbosity.setter
     def verbosity(self, value):
-        allowed_values = [
-            "None",
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
-        ]
+        allowed_values = ["None", "0", "1", "2", "3", "4", "5"]
         set_changes(self, "verbosity", value, types.CHOICE, allowed_values)
 
     @property
@@ -1337,7 +1320,7 @@ class WorkflowJobTemplateNode(DataModelMixin):
 
     @property
     def all_parents_must_converge(self):
-        """If enabled then the node will only run if all of the parent nodes have met the criteria to reach this 
+        """If enabled then the node will only run if all of the parent nodes have met the criteria to reach this
         node"""
         return self._data.get("all_parents_must_converge")
 
@@ -1347,7 +1330,7 @@ class WorkflowJobTemplateNode(DataModelMixin):
 
     @property
     def identifier(self):
-        """An identifier for this node that is unique within its workflow. It is copied to workflow job nodes 
+        """An identifier for this node that is unique within its workflow. It is copied to workflow job nodes
         corresponding to this node."""
         return self._data.get("identifier")
 
@@ -1373,7 +1356,7 @@ class WorkflowJobNode(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this workflow job node was created.
@@ -1382,7 +1365,7 @@ class WorkflowJobNode(DataModelMixin):
             :type modified: datetime, readonly
             :param extra_data: Extra data
             :type extra_data: json, readonly
-            :param inventory: Inventory applied as a prompt, assuming job template 
+            :param inventory: Inventory applied as a prompt, assuming job template
                 prompts for inventory
             :type inventory: id, readonly
             :param scm_branch: Scm branch
@@ -1422,19 +1405,19 @@ class WorkflowJobNode(DataModelMixin):
             :type failure_nodes: field, readonly
             :param always_nodes: Always nodes
             :type always_nodes: field, readonly
-            :param all_parents_must_converge: If enabled then the node will only run if all of the parent 
+            :param all_parents_must_converge: If enabled then the node will only run if all of the parent
                 nodes have met the criteria to reach this node
             :type all_parents_must_converge: boolean, readonly
-            :param do_not_run: Indicates that a job will not be created when True. 
-                Workflow runtime semantics will mark this True if the node 
+            :param do_not_run: Indicates that a job will not be created when True.
+                Workflow runtime semantics will mark this True if the node
                  of
             :type do_not_run: boolean, readonly
-            :param identifier: An identifier coresponding to the workflow job template 
+            :param identifier: An identifier coresponding to the workflow job template
                 node that this node was created from.
             :type identifier: string, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this workflow job node."""
@@ -1473,7 +1456,7 @@ class WorkflowJobNode(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -1636,7 +1619,7 @@ class WorkflowJobNode(DataModelMixin):
 
     @property
     def all_parents_must_converge(self):
-        """If enabled then the node will only run if all of the parent nodes have met the criteria to reach this 
+        """If enabled then the node will only run if all of the parent nodes have met the criteria to reach this
         node"""
         return self._data.get("all_parents_must_converge")
 
@@ -1646,8 +1629,9 @@ class WorkflowJobNode(DataModelMixin):
 
     @property
     def do_not_run(self):
-        """Indicates that a job will not be created when True. Workflow runtime semantics will mark this True if the 
-        node is in a path that will decidedly not be ran. A value of False means the node may not run."""
+        """Indicates that a job will not be created when True. Workflow runtime semantics will mark this True if the
+        node is in a path that will decidedly not be ran. A value of False means the node may not run.
+        """
         return self._data.get("do_not_run")
 
     @do_not_run.setter

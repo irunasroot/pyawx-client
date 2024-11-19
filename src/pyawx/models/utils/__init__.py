@@ -1,8 +1,8 @@
 """
 models/utils/__init__.py
-Comments: 
+Comments:
 Author: Dennis Whitney
-Email: dennis@runasroot.com
+Email: denniswhitney@irunasroot.com
 Copyright (c) 2021, iRunAsRoot
 """
 
@@ -10,10 +10,7 @@ from pyawx.exceptions import ValueNotAllowed
 
 
 def _refactor_bool(value):
-    return {
-        "true": True,
-        "false": False
-    }[value.lower()]
+    return {"true": True, "false": False}[value.lower()]
 
 
 def set_changes(obj, key, value, value_type, limit=None):
@@ -33,7 +30,7 @@ def set_changes(obj, key, value, value_type, limit=None):
     if not isinstance(value, value_type):
         raise TypeError
 
-    if value_type == bool:
+    if isinstance(value_type, bool):
         value = _refactor_bool(value)
 
     obj.__set_value__(key, value)

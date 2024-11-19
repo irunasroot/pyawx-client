@@ -1,10 +1,10 @@
 import unittest
-from unittest.mock import patch, Mock
+from unittest.mock import Mock, patch
+
 from requests import Session
 
-from tests.patching.api import get_api_client, load_model
-
 from pyawx.models.projects import Project
+from tests.patching.api import get_api_client, load_model
 
 
 class TestApi(unittest.TestCase):
@@ -15,12 +15,7 @@ class TestApi(unittest.TestCase):
             mock_model = load_model(Project)
 
             mock_get.return_value = Mock(
-                status_code=200,
-                json=Mock(
-                    return_value={
-                        "results": [mock_model]
-                    }
-                )
+                status_code=200, json=Mock(return_value={"results": [mock_model]})
             )
 
             data = api.get_data(Project)
@@ -30,9 +25,7 @@ class TestApi(unittest.TestCase):
             self.assertTrue(project.__internal__)
 
         with patch.object(Session, "put") as mock_put:
-            mock_put.return_value = Mock(
-                status_code=200
-            )
+            mock_put.return_value = Mock(status_code=200)
 
             project.name = "New Name"
             self.assertTrue(project.is_changed)
@@ -44,9 +37,7 @@ class TestApi(unittest.TestCase):
             self.assertEqual(len(api._write_back), 0)
 
         with patch.object(Session, "post") as mock_post:
-            mock_post.return_value = Mock(
-                status_code=200
-            )
+            mock_post.return_value = Mock(status_code=200)
             new_project = Project()
             self.assertFalse(new_project.__internal__)
 
@@ -54,9 +45,7 @@ class TestApi(unittest.TestCase):
             api.commit()
 
         with patch.object(Session, "delete") as mock_delete:
-            mock_delete.return_value = Mock(
-                status_code=200
-            )
+            mock_delete.return_value = Mock(status_code=200)
             api.delete(new_project)
             self.assertTrue(new_project.is_deleted)
             api.commit()

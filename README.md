@@ -1,25 +1,30 @@
 # pyawx-client
+
 A python library for interacting with Ansible AWX instances
 
 ![Unittest - master](https://github.com/irunasroot/pyawx-client/workflows/Python%20package/badge.svg?branch=master)
 
-# Installation
+## Installation
+
 You can install from pypi using pip
 ``bash
 pip install pyawx-client
 ``
 
-# Usage
-AWX provides an API v2 for interacting with it. Most of the API is supported but keep in mind this is in alpha
-and not everything will be built yet
+## Usage
+
+AWX provides an API v2 for interacting with it. Most of the API is supported
+but keep in mind this is in alpha and not everything will be built yet
 
 The Client object sort of works in the idea of SQLAlchemy... at least for now.
 
-Also, please be aware that models, or the python API could change since this project is still in Apha.
+Also, please be aware that models, or the python API could change since this
+project is still in Alpha.
 
 Get a list of Jobs
+
 ```python
-from pyawx import Client
+from pyawx.client import Client
 from pyawx.models.jobs import Job
 
 client = Client("https://awx.mycompany.com", username="me", password="password")
@@ -28,8 +33,9 @@ jobs = client.get_data(Job)
 ```
 
 Create a job template
+
 ```python
-from pyawx import Client
+from pyawx.client import Client
 from pyawx.models.jobs import JobTemplate
 
 client = Client("https://awx.mycompany.com", username="me", password="password")
@@ -41,9 +47,10 @@ client.commit()
 ```
 
 Delete a job template
+
 ```python
 from pyawx import Client
-from pyawx.models.jobs import JobTemplate
+from pyawx.models import JobTemplate
 
 client = Client("https://awx.mycompany.com", username="me", password="password")
 
@@ -51,4 +58,16 @@ job_template = client.get_data(JobTemplate)[0]
 
 client.delete(job_template)
 client.commit()
+```
+
+Models also allow you to collect data directly from them instead, but client
+still needs to be initialized
+
+```python
+from pyawx.client import Client
+from pyawx.models.jobs import Job
+
+client = Client("https://awx.mycompany.com", username="me", password="password")
+
+jobs = Job.get()
 ```

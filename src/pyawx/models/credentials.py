@@ -1,6 +1,6 @@
-from pyawx.models._mixins import DataModelMixin
-from pyawx.models.utils import set_changes, types
 from pyawx.exceptions import ValueReadOnly
+from pyawx.models.mixins import DataModelMixin
+from pyawx.models.utils import set_changes, types
 
 
 class Credential(DataModelMixin):
@@ -17,10 +17,10 @@ class Credential(DataModelMixin):
             :type description: string, required, default ""
             :param organization: Organization
             :type organization: id, required, default "None"
-            :param credential_type: Specify the type of credential you want to create. Refer to 
+            :param credential_type: Specify the type of credential you want to create. Refer to
                 the Ansible Tower documentation for details on each typ
             :type credential_type: id, required, default ``
-            :param inputs: Enter inputs using either JSON or YAML syntax. Refer to the 
+            :param inputs: Enter inputs using either JSON or YAML syntax. Refer to the
                 Ansible Tower documentation for example syntax.
             :type inputs: json, required, default "{}"
 
@@ -34,7 +34,7 @@ class Credential(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this credential was created.
@@ -51,7 +51,7 @@ class Credential(DataModelMixin):
             :type kubernetes: field, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this credential."""
@@ -90,7 +90,7 @@ class Credential(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -145,7 +145,7 @@ class Credential(DataModelMixin):
 
     @property
     def credential_type(self):
-        """Specify the type of credential you want to create. Refer to the Ansible Tower documentation for details 
+        """Specify the type of credential you want to create. Refer to the Ansible Tower documentation for details
         on each type."""
         return self._data.get("credential_type")
 
@@ -164,7 +164,7 @@ class Credential(DataModelMixin):
 
     @property
     def inputs(self):
-        """Enter inputs using either JSON or YAML syntax. Refer to the Ansible Tower documentation for example 
+        """Enter inputs using either JSON or YAML syntax. Refer to the Ansible Tower documentation for example
         syntax."""
         return self._data.get("inputs")
 
@@ -224,10 +224,10 @@ class CredentialType(DataModelMixin):
                 | kubernetes: Kubernetes
                 | galaxy: Galaxy/Automation Hub
             :type kind: choice, required, default ``
-            :param inputs: Enter inputs using either JSON or YAML syntax. Refer to the 
+            :param inputs: Enter inputs using either JSON or YAML syntax. Refer to the
                 Ansible Tower documentation for example syntax.
             :type inputs: json, required, default "{}"
-            :param injectors: Enter injectors using either JSON or YAML syntax. Refer to 
+            :param injectors: Enter injectors using either JSON or YAML syntax. Refer to
                 the Ansible Tower documentation for example syntax.
             :type injectors: json, required, default "{}"
 
@@ -241,7 +241,7 @@ class CredentialType(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this credential type was created.
@@ -254,7 +254,7 @@ class CredentialType(DataModelMixin):
             :type managed_by_tower: boolean, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this credential type."""
@@ -293,7 +293,7 @@ class CredentialType(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -344,10 +344,7 @@ class CredentialType(DataModelMixin):
 
     @kind.setter
     def kind(self, value):
-        allowed_values = [
-            "net",
-            "cloud"
-        ]
+        allowed_values = ["net", "cloud"]
         set_changes(self, "kind", value, types.CHOICE, allowed_values)
 
     @property
@@ -370,7 +367,7 @@ class CredentialType(DataModelMixin):
 
     @property
     def inputs(self):
-        """Enter inputs using either JSON or YAML syntax. Refer to the Ansible Tower documentation for example 
+        """Enter inputs using either JSON or YAML syntax. Refer to the Ansible Tower documentation for example
         syntax."""
         return self._data.get("inputs")
 
@@ -380,7 +377,7 @@ class CredentialType(DataModelMixin):
 
     @property
     def injectors(self):
-        """Enter injectors using either JSON or YAML syntax. Refer to the Ansible Tower documentation for example 
+        """Enter injectors using either JSON or YAML syntax. Refer to the Ansible Tower documentation for example
         syntax."""
         return self._data.get("injectors")
 
@@ -418,17 +415,17 @@ class CredentialInputSource(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this credential input source was created.
             :type created: datetime, readonly
-            :param modified: Timestamp when this credential input source was last 
+            :param modified: Timestamp when this credential input source was last
                 modified.
             :type modified: datetime, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this credential input source."""
@@ -467,7 +464,7 @@ class CredentialInputSource(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 

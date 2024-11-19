@@ -1,5 +1,5 @@
-from pyawx.models._mixins import DataModelMixin
 from pyawx.exceptions import ValueReadOnly
+from pyawx.models.mixins import DataModelMixin
 
 
 class UnifiedJobTemplate(DataModelMixin):
@@ -23,7 +23,7 @@ class UnifiedJobTemplate(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this unified job template was created.
@@ -57,7 +57,7 @@ class UnifiedJobTemplate(DataModelMixin):
             :type status: choice, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this unified job template."""
@@ -96,7 +96,7 @@ class UnifiedJobTemplate(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -199,7 +199,7 @@ class UnifiedJob(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this unified job was created.
@@ -243,17 +243,17 @@ class UnifiedJob(DataModelMixin):
             :type canceled_on: datetime, readonly
             :param elapsed: Elapsed time in seconds that the job ran.
             :type elapsed: decimal, readonly
-            :param job_explanation: A status field to indicate the state of the job if it 
+            :param job_explanation: A status field to indicate the state of the job if it
                 wasn't able to run and capture stdout
             :type job_explanation: string, readonly
             :param execution_node: The node the job executed on.
             :type execution_node: string, readonly
-            :param controller_node: The instance that managed the isolated execution 
+            :param controller_node: The instance that managed the isolated execution
                 environment.
             :type controller_node: string, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this unified job."""
@@ -292,7 +292,7 @@ class UnifiedJob(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 

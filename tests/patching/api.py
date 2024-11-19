@@ -1,8 +1,10 @@
 import json
-from unittest.mock import patch, Mock
 from pathlib import Path
+from unittest.mock import patch
+
 from requests import Session
-from pyawx import Client
+
+from pyawx.client import Client
 
 BASE_PATH = Path(__file__).parents[1]
 
@@ -23,7 +25,7 @@ BASE_PATH = Path(__file__).parents[1]
 
 def get_api_client():
     with patch.object(Session, "get"):
-        api = Client("https://", token="123")
+        api = Client("https://awx.irunasroot.com", token="123")
     return api
 
 

@@ -1,0 +1,51 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "pyawx"
+version = "1.0.0"
+description = "Python API to access Ansible AWX/Tower v2 API"
+authors = [
+    "Dennis Whitney <denniswhitney@irunasroot.com>"
+]
+license = "GPL-3.0-or-later"
+readme = "README.md"
+
+keywords = [
+    "ansible",
+    "tower",
+    "awx",
+    "aap",
+    "redhat",
+    "automation"
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: POSIX :: Linux",
+    "Natural Language :: English",
+]
+
+[tool.poetry.urls]
+Homepage = "https://irunasroot.com"
+Issues = "https://github.com/irunasroot/pyawx-client/issues"
+Documentation = "https://github.com/irunasroot/pyawx-client/wiki"
+Repository = "https://github.com/irunasroot/pyawx-client"
+Changelog = "https://github.com/irunasroot/pyawx-client/blob/main/CHANGELOG.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.25.1"
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "*"
+pylint = "*"
+pytest = "*"
+isort = "*"
+ruff = "*"
+black = "*"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

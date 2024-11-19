@@ -1,25 +1,19 @@
-import requests
 from base64 import b64encode
-from pyawx.models import DataModelMixin
-from pyawx.models.utils import get_endpoint, update, flush
+from urllib.parse import urlparse
+
+import requests
+
+from pyawx.client_cache import set_client
 from pyawx.exceptions import UnauthorizedAccess, UnknownEndpoint
+from pyawx.models.mixins import DataModelMixin
+from pyawx.models.utils import flush, get_endpoint, update
 
 
 class _ApiUrl:
     def __init__(self, url):
-        if "/api/v2" in url:
-            url = url.replace("/api/v2", "")
-        self._url = url
+        self._url = "/".join(urlparse(url)[0:2])
 
     def endpoint(self, endpoint):
-        endpoint = endpoint.strip()
-
-        if not endpoint.startswith("/"):
-            endpoint = f"/{endpoint}"
-
-        if not endpoint.endswith("/"):
-            endpoint = f"{endpoint}/"
-
         return f"{self._url}{endpoint}"
 
 
@@ -32,7 +26,7 @@ class Client:
         """
         Main client API object for connecting to an AWX instance.
 
-        If an OAuth token is provided, it will be used before the username and password
+        The OAuth token takes precedence over username and password if all three are provided.
 
         :param url: The base URL of the AWX instance
         :type url: str, required
@@ -50,40 +44,35 @@ class Client:
         self._session = requests.Session()
 
         if token:
-            self._headers = {
-                "Authorization": "Bearer {0}".format(token)
-            }
+            authorization = "Bearer {0}".format(token)
         elif username and password:
-            self._headers = {
-                "Authorization": f"Basic {b64encode(f'{username}:{password}'.encode()).decode()}"
-            }
+            authorization = (
+                f"Basic {b64encode(f'{username}:{password}'.encode()).decode()}"
+            )
         else:
             raise ValueError("No username and password or token was supplied")
 
-        self._session.headers.update(self._headers)
         self._session.headers.update(
-            {
-                "Content-Type": "application/json"
-            }
+            {"Content-Type": "application/json", "Authorization": authorization}
         )
 
         _me = self._session.get(self.url.endpoint("/api/v2/me"))
 
         if _me.status_code in [401, 403]:
-            raise UnauthorizedAccess
+            raise UnauthorizedAccess(_me.text)
         elif _me.status_code == 404:
-            raise UnknownEndpoint
+            raise UnknownEndpoint(_me.text)
+
+        # Cache the client so models can access it
+        set_client(self)
 
     def _get(self, model):
-        result = self._session.get(
-            self.url.endpoint(get_endpoint(model))
-        )
+        result = self._session.get(self.url.endpoint(get_endpoint(model)))
         return result
 
     def _post(self, model):
         result = self._session.post(
-            self.url.endpoint(f"{model.__endpoint__}"),
-            json=model.export()
+            self.url.endpoint(f"{model.__endpoint__}"), json=model.export()
         )
         status_code = result.status_code
         result = result.json()
@@ -112,6 +101,7 @@ class Client:
     def get_data(self, model):
         """
         Load model object
+
         :param model: The model object that is being requested
         :type model: class of
             | :class:`pyawx.models.projects.Project`
@@ -120,9 +110,7 @@ class Client:
 
         items = list()
 
-        results = self._session.get(
-            self.url.endpoint(get_endpoint(model))
-        )
+        results = self._session.get(self.url.endpoint(get_endpoint(model)))
 
         if results.status_code != 200:
             raise Exception(results.json()["detail"])

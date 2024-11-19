@@ -1,6 +1,6 @@
-from pyawx.models._mixins import DataModelMixin
-from pyawx.models.utils import set_changes, types
 from pyawx.exceptions import ValueReadOnly
+from pyawx.models.mixins import DataModelMixin
+from pyawx.models.utils import set_changes, types
 
 
 class User(DataModelMixin):
@@ -11,7 +11,7 @@ class User(DataModelMixin):
         User List
 
         Attributes:
-            :param username: Required. 150 characters or fewer. Letters, digits and 
+            :param username: Required. 150 characters or fewer. Letters, digits and
                 @/./+/-/_ only.
             :type username: string, required, default ``
             :param first_name: First name
@@ -20,7 +20,7 @@ class User(DataModelMixin):
             :type last_name: string, required, default ``
             :param email: Email address
             :type email: string, required, default ``
-            :param is_superuser: Designates that this user has all permissions without 
+            :param is_superuser: Designates that this user has all permissions without
                 explicitly assigning them.
             :type is_superuser: boolean, required, default False
             :param is_system_auditor: Is system auditor
@@ -36,7 +36,7 @@ class User(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this user was created.
@@ -49,7 +49,7 @@ class User(DataModelMixin):
             :type external_account: field, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this user."""
@@ -88,7 +88,7 @@ class User(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -212,7 +212,7 @@ class Team(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this team was created.
@@ -221,7 +221,7 @@ class Team(DataModelMixin):
             :type modified: datetime, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this team."""
@@ -260,7 +260,7 @@ class Team(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -331,7 +331,7 @@ class Role(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param name: Name of this role.
@@ -340,7 +340,7 @@ class Role(DataModelMixin):
             :type description: field, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this role."""
@@ -379,7 +379,7 @@ class Role(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 

@@ -1,6 +1,6 @@
-from pyawx.models._mixins import DataModelMixin
-from pyawx.models.utils import set_changes, types
 from pyawx.exceptions import ValueReadOnly
+from pyawx.models.mixins import DataModelMixin
+from pyawx.models.utils import set_changes, types
 
 
 class Project(DataModelMixin):
@@ -15,10 +15,10 @@ class Project(DataModelMixin):
             :type name: string, required, default ``
             :param description: Optional description of this project.
             :type description: string, required, default ""
-            :param local_path: Local path (relative to PROJECTS_ROOT) containing playbooks 
+            :param local_path: Local path (relative to PROJECTS_ROOT) containing playbooks
                 and related files for this project.
             :type local_path: string, required, default ``
-            :param scm_type: Specifies the source control system used to store the 
+            :param scm_type: Specifies the source control system used to store the
                 project.
                 | : Manual
                 | git: Git
@@ -39,21 +39,21 @@ class Project(DataModelMixin):
             :type scm_delete_on_update: boolean, required, default False
             :param credential: Credential
             :type credential: id, required, default ``
-            :param timeout: The amount of time (in seconds) to run before the task is 
+            :param timeout: The amount of time (in seconds) to run before the task is
                 canceled.
             :type timeout: integer, required, default 0
             :param organization: The organization used to determine access to this template.
             :type organization: id, required, default ``
-            :param scm_update_on_launch: Update the project when a job is launched that uses the 
+            :param scm_update_on_launch: Update the project when a job is launched that uses the
                 project.
             :type scm_update_on_launch: boolean, required, default False
-            :param scm_update_cache_timeout: The number of seconds after the last project update ran 
+            :param scm_update_cache_timeout: The number of seconds after the last project update ran
                 that a new project update will be launched as a job
             :type scm_update_cache_timeout: integer, required, default 0
-            :param allow_override: Allow changing the SCM branch or revision in a job template 
+            :param allow_override: Allow changing the SCM branch or revision in a job template
                 that uses this project.
             :type allow_override: boolean, required, default False
-            :param custom_virtualenv: Local absolute file path containing a custom Python 
+            :param custom_virtualenv: Local absolute file path containing a custom Python
                 virtualenv to use
             :type custom_virtualenv: string, required, default "None"
 
@@ -67,7 +67,7 @@ class Project(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this project was created.
@@ -101,7 +101,7 @@ class Project(DataModelMixin):
             :type last_updated: datetime, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this project."""
@@ -140,7 +140,7 @@ class Project(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -200,14 +200,7 @@ class Project(DataModelMixin):
 
     @scm_type.setter
     def scm_type(self, value):
-        allowed_values = [
-            "",
-            "git",
-            "hg",
-            "svn",
-            "insights",
-            "archive"
-        ]
+        allowed_values = ["", "git", "hg", "svn", "insights", "archive"]
         set_changes(self, "scm_type", value, types.CHOICE, allowed_values)
 
     @property
@@ -338,7 +331,7 @@ class Project(DataModelMixin):
 
     @property
     def scm_update_cache_timeout(self):
-        """The number of seconds after the last project update ran that a new project update will be launched as a 
+        """The number of seconds after the last project update ran that a new project update will be launched as a
         job dependency."""
         return self._data.get("scm_update_cache_timeout")
 
@@ -400,7 +393,7 @@ class ProjectUpdate(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this project update was created.
@@ -444,15 +437,15 @@ class ProjectUpdate(DataModelMixin):
             :type canceled_on: datetime, readonly
             :param elapsed: Elapsed time in seconds that the job ran.
             :type elapsed: decimal, readonly
-            :param job_explanation: A status field to indicate the state of the job if it 
+            :param job_explanation: A status field to indicate the state of the job if it
                 wasn't able to run and capture stdout
             :type job_explanation: string, readonly
             :param execution_node: The node the job executed on.
             :type execution_node: string, readonly
-            :param local_path: Local path (relative to PROJECTS_ROOT) containing playbooks 
+            :param local_path: Local path (relative to PROJECTS_ROOT) containing playbooks
                 and related files for this project.
             :type local_path: string, readonly
-            :param scm_type: Specifies the source control system used to store the 
+            :param scm_type: Specifies the source control system used to store the
                 project.
                 | : Manual
                 | git: Git
@@ -473,10 +466,10 @@ class ProjectUpdate(DataModelMixin):
             :type scm_delete_on_update: boolean, readonly
             :param credential: Credential
             :type credential: id, readonly
-            :param timeout: The amount of time (in seconds) to run before the task is 
+            :param timeout: The amount of time (in seconds) to run before the task is
                 canceled.
             :type timeout: integer, readonly
-            :param scm_revision: The SCM Revision discovered by this update for the given 
+            :param scm_revision: The SCM Revision discovered by this update for the given
                 project and branch.
             :type scm_revision: string, readonly
             :param project: Project
@@ -495,7 +488,7 @@ class ProjectUpdate(DataModelMixin):
             :type job_env: json, readonly
             :param result_traceback: Result traceback
             :type result_traceback: string, readonly
-            :param event_processing_finished: Indicates whether all of the events generated by this 
+            :param event_processing_finished: Indicates whether all of the events generated by this
                 unified job have been saved to the database.
             :type event_processing_finished: boolean, readonly
             :param host_status_counts: A count of hosts uniquely assigned to each status.
@@ -504,7 +497,7 @@ class ProjectUpdate(DataModelMixin):
             :type playbook_counts: field, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this project update."""
@@ -543,7 +536,7 @@ class ProjectUpdate(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 

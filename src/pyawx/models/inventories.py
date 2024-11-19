@@ -1,6 +1,6 @@
-from pyawx.models._mixins import DataModelMixin
-from pyawx.models.utils import set_changes, types
 from pyawx.exceptions import ValueReadOnly
+from pyawx.models.mixins import DataModelMixin
+from pyawx.models.utils import set_changes, types
 
 
 class Inventory(DataModelMixin):
@@ -25,7 +25,7 @@ class Inventory(DataModelMixin):
             :type host_filter: string, required, default "None"
             :param variables: Inventory variables in JSON or YAML format.
             :type variables: json, required, default ""
-            :param insights_credential: Credentials to be used by hosts belonging to this inventory 
+            :param insights_credential: Credentials to be used by hosts belonging to this inventory
                 when accessing Red Hat Insights API.
             :type insights_credential: id, required, default ``
 
@@ -39,39 +39,39 @@ class Inventory(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this inventory was created.
             :type created: datetime, readonly
             :param modified: Timestamp when this inventory was last modified.
             :type modified: datetime, readonly
-            :param has_active_failures: This field is deprecated and will be removed in a future 
+            :param has_active_failures: This field is deprecated and will be removed in a future
                 release. Flag indicating whether any hosts in this
             :type has_active_failures: boolean, readonly
-            :param total_hosts: This field is deprecated and will be removed in a future 
+            :param total_hosts: This field is deprecated and will be removed in a future
                 release. Total number of hosts in this inventory.
             :type total_hosts: integer, readonly
-            :param hosts_with_active_failures: This field is deprecated and will be removed in a future 
+            :param hosts_with_active_failures: This field is deprecated and will be removed in a future
                 release. Number of hosts in this inventory with active
             :type hosts_with_active_failures: integer, readonly
-            :param total_groups: This field is deprecated and will be removed in a future 
+            :param total_groups: This field is deprecated and will be removed in a future
                 release. Total number of groups in this inventory.
             :type total_groups: integer, readonly
-            :param has_inventory_sources: This field is deprecated and will be removed in a future 
+            :param has_inventory_sources: This field is deprecated and will be removed in a future
                 release. Flag indicating whether this inventory has any
             :type has_inventory_sources: boolean, readonly
-            :param total_inventory_sources: Total number of external inventory sources configured 
+            :param total_inventory_sources: Total number of external inventory sources configured
                 within this inventory.
             :type total_inventory_sources: integer, readonly
-            :param inventory_sources_with_failures: Number of external inventory sources in this inventory with 
+            :param inventory_sources_with_failures: Number of external inventory sources in this inventory with
                 failures.
             :type inventory_sources_with_failures: integer, readonly
             :param pending_deletion: Flag indicating the inventory is being deleted.
             :type pending_deletion: boolean, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this inventory."""
@@ -110,7 +110,7 @@ class Inventory(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -170,10 +170,7 @@ class Inventory(DataModelMixin):
 
     @kind.setter
     def kind(self, value):
-        allowed_values = [
-            "",
-            "smart"
-        ]
+        allowed_values = ["", "smart"]
         set_changes(self, "kind", value, types.CHOICE, allowed_values)
 
     @property
@@ -196,7 +193,7 @@ class Inventory(DataModelMixin):
 
     @property
     def has_active_failures(self):
-        """This field is deprecated and will be removed in a future release. Flag indicating whether any hosts in 
+        """This field is deprecated and will be removed in a future release. Flag indicating whether any hosts in
         this inventory have failed."""
         return self._data.get("has_active_failures")
 
@@ -206,7 +203,7 @@ class Inventory(DataModelMixin):
 
     @property
     def total_hosts(self):
-        """This field is deprecated and will be removed in a future release. Total number of hosts in this 
+        """This field is deprecated and will be removed in a future release. Total number of hosts in this
         inventory."""
         return self._data.get("total_hosts")
 
@@ -216,7 +213,7 @@ class Inventory(DataModelMixin):
 
     @property
     def hosts_with_active_failures(self):
-        """This field is deprecated and will be removed in a future release. Number of hosts in this inventory with 
+        """This field is deprecated and will be removed in a future release. Number of hosts in this inventory with
         active failures."""
         return self._data.get("hosts_with_active_failures")
 
@@ -226,7 +223,7 @@ class Inventory(DataModelMixin):
 
     @property
     def total_groups(self):
-        """This field is deprecated and will be removed in a future release. Total number of groups in this 
+        """This field is deprecated and will be removed in a future release. Total number of groups in this
         inventory."""
         return self._data.get("total_groups")
 
@@ -236,7 +233,7 @@ class Inventory(DataModelMixin):
 
     @property
     def has_inventory_sources(self):
-        """This field is deprecated and will be removed in a future release. Flag indicating whether this inventory 
+        """This field is deprecated and will be removed in a future release. Flag indicating whether this inventory
         has any external inventory sources."""
         return self._data.get("has_inventory_sources")
 
@@ -308,17 +305,17 @@ class InventoryScript(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this custom inventory script was created.
             :type created: datetime, readonly
-            :param modified: Timestamp when this custom inventory script was last 
+            :param modified: Timestamp when this custom inventory script was last
                 modified.
             :type modified: datetime, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this custom inventory script."""
@@ -357,7 +354,7 @@ class InventoryScript(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -453,26 +450,26 @@ class InventorySource(DataModelMixin):
             :type source_vars: string, required, default ""
             :param credential: Cloud credential to use for inventory updates.
             :type credential: integer, required, default "None"
-            :param enabled_var: Retrieve the enabled state from the given dict of host 
-                variables. The enabled variable may be specified as 
+            :param enabled_var: Retrieve the enabled state from the given dict of host
+                variables. The enabled variable may be specified as
                 neste
             :type enabled_var: string, required, default ""
-            :param enabled_value: Only used when enabled_var is set. Value when the host is 
-                considered enabled. For example if 
+            :param enabled_value: Only used when enabled_var is set. Value when the host is
+                considered enabled. For example if
                 _o
             :type enabled_value: string, required, default ""
-            :param host_filter: Regex where only matching hosts will be imported into 
+            :param host_filter: Regex where only matching hosts will be imported into
                 Tower.
             :type host_filter: string, required, default ""
-            :param overwrite: Overwrite local groups and hosts from remote inventory 
+            :param overwrite: Overwrite local groups and hosts from remote inventory
                 source.
             :type overwrite: boolean, required, default False
             :param overwrite_vars: Overwrite local variables from remote inventory source.
             :type overwrite_vars: boolean, required, default False
-            :param custom_virtualenv: Local absolute file path containing a custom Python 
+            :param custom_virtualenv: Local absolute file path containing a custom Python
                 virtualenv to use
             :type custom_virtualenv: string, required, default "None"
-            :param timeout: The amount of time (in seconds) to run before the task is 
+            :param timeout: The amount of time (in seconds) to run before the task is
                 canceled.
             :type timeout: integer, required, default 0
             :param verbosity: Verbosity
@@ -501,7 +498,7 @@ class InventorySource(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this inventory source was created.
@@ -532,7 +529,7 @@ class InventorySource(DataModelMixin):
             :type last_updated: datetime, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this inventory source."""
@@ -571,7 +568,7 @@ class InventorySource(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -633,7 +630,7 @@ class InventorySource(DataModelMixin):
             "openstack",
             "rhv",
             "tower",
-            "custom"
+            "custom",
         ]
         set_changes(self, "source", value, types.CHOICE, allowed_values)
 
@@ -675,8 +672,8 @@ class InventorySource(DataModelMixin):
 
     @property
     def enabled_var(self):
-        """Retrieve the enabled state from the given dict of host variables. The enabled variable may be specified 
-        as "foo.bar", in which case the lookup will traverse into nested dicts, equivalent to: 
+        """Retrieve the enabled state from the given dict of host variables. The enabled variable may be specified
+        as "foo.bar", in which case the lookup will traverse into nested dicts, equivalent to:
         """
         return self._data.get("enabled_var")
 
@@ -686,9 +683,9 @@ class InventorySource(DataModelMixin):
 
     @property
     def enabled_value(self):
-        """Only used when enabled_var is set. Value when the host is considered enabled. For example if 
-        enabled_var="status.power_state"and enabled_value="powered_on" with host variables:{   "status": {     
-           },    
+        """Only used when enabled_var is set. Value when the host is considered enabled. For example if
+        enabled_var="status.power_state"and enabled_value="powered_on" with host variables:{   "status": {
+           },
         """
         return self._data.get("enabled_value")
 
@@ -748,11 +745,7 @@ class InventorySource(DataModelMixin):
 
     @verbosity.setter
     def verbosity(self, value):
-        allowed_values = [
-            "0",
-            "1",
-            "2"
-        ]
+        allowed_values = ["0", "1", "2"]
         set_changes(self, "verbosity", value, types.CHOICE, allowed_values)
 
     @property
@@ -872,7 +865,7 @@ class InventoryUpdate(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this inventory update was created.
@@ -916,7 +909,7 @@ class InventoryUpdate(DataModelMixin):
             :type canceled_on: datetime, readonly
             :param elapsed: Elapsed time in seconds that the job ran.
             :type elapsed: decimal, readonly
-            :param job_explanation: A status field to indicate the state of the job if it 
+            :param job_explanation: A status field to indicate the state of the job if it
                 wasn't able to run and capture stdout
             :type job_explanation: string, readonly
             :param execution_node: The node the job executed on.
@@ -942,25 +935,25 @@ class InventoryUpdate(DataModelMixin):
             :type source_vars: string, readonly
             :param credential: Cloud credential to use for inventory updates.
             :type credential: integer, readonly
-            :param enabled_var: Retrieve the enabled state from the given dict of host 
-                variables. The enabled variable may be specified as 
+            :param enabled_var: Retrieve the enabled state from the given dict of host
+                variables. The enabled variable may be specified as
                 neste
             :type enabled_var: string, readonly
-            :param enabled_value: Only used when enabled_var is set. Value when the host is 
-                considered enabled. For example if 
+            :param enabled_value: Only used when enabled_var is set. Value when the host is
+                considered enabled. For example if
                 _o
             :type enabled_value: string, readonly
-            :param host_filter: Regex where only matching hosts will be imported into 
+            :param host_filter: Regex where only matching hosts will be imported into
                 Tower.
             :type host_filter: string, readonly
-            :param overwrite: Overwrite local groups and hosts from remote inventory 
+            :param overwrite: Overwrite local groups and hosts from remote inventory
                 source.
             :type overwrite: boolean, readonly
             :param overwrite_vars: Overwrite local variables from remote inventory source.
             :type overwrite_vars: boolean, readonly
             :param custom_virtualenv: Custom virtualenv
             :type custom_virtualenv: string, readonly
-            :param timeout: The amount of time (in seconds) to run before the task is 
+            :param timeout: The amount of time (in seconds) to run before the task is
                 canceled.
             :type timeout: integer, readonly
             :param verbosity: Verbosity
@@ -976,7 +969,7 @@ class InventoryUpdate(DataModelMixin):
             :type license_error: boolean, readonly
             :param org_host_limit_error: Org host limit error
             :type org_host_limit_error: boolean, readonly
-            :param source_project_update: Inventory files from this Project Update were used for the 
+            :param source_project_update: Inventory files from this Project Update were used for the
                 inventory update.
             :type source_project_update: id, readonly
             :param job_args: Job args
@@ -987,14 +980,14 @@ class InventoryUpdate(DataModelMixin):
             :type job_env: json, readonly
             :param result_traceback: Result traceback
             :type result_traceback: string, readonly
-            :param event_processing_finished: Indicates whether all of the events generated by this 
+            :param event_processing_finished: Indicates whether all of the events generated by this
                 unified job have been saved to the database.
             :type event_processing_finished: boolean, readonly
             :param source_project: The project used for this job.
             :type source_project: field, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this inventory update."""
@@ -1033,7 +1026,7 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -1214,8 +1207,8 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def enabled_var(self):
-        """Retrieve the enabled state from the given dict of host variables. The enabled variable may be specified 
-        as "foo.bar", in which case the lookup will traverse into nested dicts, equivalent to: 
+        """Retrieve the enabled state from the given dict of host variables. The enabled variable may be specified
+        as "foo.bar", in which case the lookup will traverse into nested dicts, equivalent to:
         """
         return self._data.get("enabled_var")
 
@@ -1225,9 +1218,9 @@ class InventoryUpdate(DataModelMixin):
 
     @property
     def enabled_value(self):
-        """Only used when enabled_var is set. Value when the host is considered enabled. For example if 
-        enabled_var="status.power_state"and enabled_value="powered_on" with host variables:{   "status": {     
-           },    
+        """Only used when enabled_var is set. Value when the host is considered enabled. For example if
+        enabled_var="status.power_state"and enabled_value="powered_on" with host variables:{   "status": {
+           },
         """
         return self._data.get("enabled_value")
 
@@ -1416,7 +1409,7 @@ class Group(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this group was created.
@@ -1425,7 +1418,7 @@ class Group(DataModelMixin):
             :type modified: datetime, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this group."""
@@ -1464,7 +1457,7 @@ class Group(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -1543,7 +1536,7 @@ class Host(DataModelMixin):
             :type inventory: id, required, default ``
             :param enabled: Is this host online and available for running jobs?
             :type enabled: boolean, required, default True
-            :param instance_id: The value used by the remote inventory source to uniquely 
+            :param instance_id: The value used by the remote inventory source to uniquely
                 identify the host
             :type instance_id: string, required, default ""
             :param variables: Host variables in JSON or YAML format.
@@ -1559,7 +1552,7 @@ class Host(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this host was created.
@@ -1580,7 +1573,7 @@ class Host(DataModelMixin):
             :type ansible_facts_modified: datetime, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this host."""
@@ -1619,7 +1612,7 @@ class Host(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 

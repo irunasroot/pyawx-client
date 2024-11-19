@@ -1,6 +1,6 @@
-from pyawx.models._mixins import DataModelMixin
-from pyawx.models.utils import set_changes, types
 from pyawx.exceptions import ValueReadOnly
+from pyawx.models.mixins import DataModelMixin
+from pyawx.models.utils import set_changes, types
 
 
 class Application(DataModelMixin):
@@ -15,19 +15,19 @@ class Application(DataModelMixin):
             :type name: string, required, default ``
             :param description: Optional description of this application.
             :type description: string, required, default ""
-            :param client_type: Set to Public or Confidential depending on how secure the 
+            :param client_type: Set to Public or Confidential depending on how secure the
                 client device is.
                 | confidential: Confidential
                 | public: Public
             :type client_type: choice, required, default ``
             :param redirect_uris: Allowed URIs list, space separated
             :type redirect_uris: string, required, default ``
-            :param authorization_grant_type: The Grant type the user must use for acquire tokens for 
+            :param authorization_grant_type: The Grant type the user must use for acquire tokens for
                 this application.
                 | authorization-code: Authorization code
                 | password: Resource owner password-based
             :type authorization_grant_type: choice, required, default ``
-            :param skip_authorization: Set True to skip authorization step for completely trusted 
+            :param skip_authorization: Set True to skip authorization step for completely trusted
                 applications.
             :type skip_authorization: boolean, required, default False
             :param organization: Organization containing this application.
@@ -43,7 +43,7 @@ class Application(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this application was created.
@@ -52,12 +52,12 @@ class Application(DataModelMixin):
             :type modified: datetime, readonly
             :param client_id: Client id
             :type client_id: string, readonly
-            :param client_secret: Used for more stringent verification of access to an 
+            :param client_secret: Used for more stringent verification of access to an
                 application when creating a token.
             :type client_secret: string, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this application."""
@@ -96,7 +96,7 @@ class Application(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -165,10 +165,7 @@ class Application(DataModelMixin):
 
     @client_type.setter
     def client_type(self, value):
-        allowed_values = [
-            "confidential",
-            "public"
-        ]
+        allowed_values = ["confidential", "public"]
         set_changes(self, "client_type", value, types.CHOICE, allowed_values)
 
     @property
@@ -187,11 +184,10 @@ class Application(DataModelMixin):
 
     @authorization_grant_type.setter
     def authorization_grant_type(self, value):
-        allowed_values = [
-            "authorization-code",
-            "password"
-        ]
-        set_changes(self, "authorization_grant_type", value, types.CHOICE, allowed_values)
+        allowed_values = ["authorization-code", "password"]
+        set_changes(
+            self, "authorization_grant_type", value, types.CHOICE, allowed_values
+        )
 
     @property
     def skip_authorization(self):
@@ -224,7 +220,7 @@ class Token(DataModelMixin):
             :type description: string, required, default ""
             :param application: Application
             :type application: id, required, default ``
-            :param scope: Allowed scopes, further restricts user's permissions. Must 
+            :param scope: Allowed scopes, further restricts user's permissions. Must
                 be a simple space-separated string with allowed scopes
             :type scope: string, required, default "write"
 
@@ -238,7 +234,7 @@ class Token(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this access token was created.
@@ -255,7 +251,7 @@ class Token(DataModelMixin):
             :type expires: datetime, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this access token."""
@@ -294,7 +290,7 @@ class Token(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -376,7 +372,7 @@ class Token(DataModelMixin):
 
     @property
     def scope(self):
-        """Allowed scopes, further restricts user's permissions. Must be a simple space-separated string with 
+        """Allowed scopes, further restricts user's permissions. Must be a simple space-separated string with
         allowed scopes ['read', 'write']."""
         return self._data.get("scope")
 

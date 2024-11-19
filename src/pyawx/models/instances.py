@@ -1,6 +1,6 @@
-from pyawx.models._mixins import DataModelMixin
-from pyawx.models.utils import set_changes, types
 from pyawx.exceptions import ValueReadOnly
+from pyawx.models.mixins import DataModelMixin
+from pyawx.models.utils import set_changes, types
 
 
 class Instance(DataModelMixin):
@@ -44,7 +44,7 @@ class Instance(DataModelMixin):
             :type consumed_capacity: field, readonly
             :param percent_capacity_remaining: Percent capacity remaining
             :type percent_capacity_remaining: field, readonly
-            :param jobs_running: Count of jobs in the running or waiting state that are 
+            :param jobs_running: Count of jobs in the running or waiting state that are
                 targeted for this instance
             :type jobs_running: integer, readonly
             :param jobs_total: Count of all jobs that target this instance
@@ -59,7 +59,7 @@ class Instance(DataModelMixin):
             :type mem_capacity: integer, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this instance."""
@@ -262,17 +262,19 @@ class InstanceGroup(DataModelMixin):
             :type name: string, required, default ``
             :param credential: Credential
             :type credential: id, required, default ``
-            :param policy_instance_percentage: Minimum percentage of all instances that will be 
+            :param policy_instance_percentage: Minimum percentage of all instances that will be
                 automatically assigned to this group when new instances
             :type policy_instance_percentage: integer, required, default 0
-            :param policy_instance_minimum: Static minimum number of Instances that will be 
+            :param policy_instance_minimum: Static minimum number of Instances that will be
                 automatically assign to this group when new instances come
             :type policy_instance_minimum: integer, required, default 0
-            :param policy_instance_list: List of exact-match Instances that will be assigned to this 
+            :param policy_instance_list: List of exact-match Instances that will be assigned to this
                 group
             :type policy_instance_list: json, required, default ``
             :param pod_spec_override: Pod spec override
-            :type pod_spec_override: string, required, default "{'apiVersion': 'v1', 'kind': 'Pod', 'metadata': {'namespace': 'default'}, 'spec': {'containers': [{'image': 'ansible/ansible-runner', 'tty': True, 'stdin': True, 'imagePullPolicy': 'Always', 'args': ['sleep', 'infinity']}]}}"
+            :type pod_spec_override: string, required, default "{'apiVersion': 'v1', 'kind': 'Pod', 'metadata':
+                {'namespace': 'default'}, 'spec': {'containers': [{'image': 'ansible/ansible-runner', 'tty': True,
+                'stdin': True, 'imagePullPolicy': 'Always', 'args': ['sleep', 'infinity']}]}}"
 
         Read Only Attributes:
             :param id: Database ID for this instance group.
@@ -296,7 +298,7 @@ class InstanceGroup(DataModelMixin):
             :type consumed_capacity: field, readonly
             :param percent_capacity_remaining: Percent capacity remaining
             :type percent_capacity_remaining: field, readonly
-            :param jobs_running: Count of jobs in the running or waiting state that are 
+            :param jobs_running: Count of jobs in the running or waiting state that are
                 targeted for this instance group
             :type jobs_running: integer, readonly
             :param jobs_total: Count of all jobs that target this instance group
@@ -307,18 +309,18 @@ class InstanceGroup(DataModelMixin):
             :type controller: id, readonly
             :param is_controller: Indicates whether instance group controls any other group
             :type is_controller: boolean, readonly
-            :param is_isolated: Indicates whether instances in this group are 
+            :param is_isolated: Indicates whether instances in this group are
                 isolated.Isolated groups have a designated controller
             :type is_isolated: boolean, readonly
-            :param is_containerized: Indicates whether instances in this group are 
+            :param is_containerized: Indicates whether instances in this group are
                 containerized.Containerized groups have a designated
             :type is_containerized: boolean, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this instance group."""
@@ -465,7 +467,7 @@ class InstanceGroup(DataModelMixin):
 
     @property
     def is_isolated(self):
-        """Indicates whether instances in this group are isolated.Isolated groups have a designated controller 
+        """Indicates whether instances in this group are isolated.Isolated groups have a designated controller
         group."""
         return self._data.get("is_isolated")
 
@@ -475,7 +477,7 @@ class InstanceGroup(DataModelMixin):
 
     @property
     def is_containerized(self):
-        """Indicates whether instances in this group are containerized.Containerized groups have a designated 
+        """Indicates whether instances in this group are containerized.Containerized groups have a designated
         Openshift or Kubernetes cluster."""
         return self._data.get("is_containerized")
 
@@ -494,7 +496,7 @@ class InstanceGroup(DataModelMixin):
 
     @property
     def policy_instance_percentage(self):
-        """Minimum percentage of all instances that will be automatically assigned to this group when new instances 
+        """Minimum percentage of all instances that will be automatically assigned to this group when new instances
         come online."""
         return self._data.get("policy_instance_percentage")
 
@@ -504,7 +506,7 @@ class InstanceGroup(DataModelMixin):
 
     @property
     def policy_instance_minimum(self):
-        """Static minimum number of Instances that will be automatically assign to this group when new instances 
+        """Static minimum number of Instances that will be automatically assign to this group when new instances
         come online."""
         return self._data.get("policy_instance_minimum")
 
@@ -532,7 +534,7 @@ class InstanceGroup(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 

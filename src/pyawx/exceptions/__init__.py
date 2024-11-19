@@ -1,8 +1,8 @@
 """
 exceptions/__init__.py
-Comments: 
+Comments:
 Author: Dennis Whitney
-Email: dennis@runasroot.com
+Email: denniswhitney@irunasroot.com
 Copyright (c) 2021, iRunAsRoot
 """
 

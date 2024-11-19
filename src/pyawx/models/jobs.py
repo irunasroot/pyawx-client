@@ -1,6 +1,6 @@
-from pyawx.models._mixins import DataModelMixin
-from pyawx.models.utils import set_changes, types
 from pyawx.exceptions import ValueReadOnly
+from pyawx.models.mixins import DataModelMixin
+from pyawx.models.utils import set_changes, types
 
 
 class JobTemplate(DataModelMixin):
@@ -25,7 +25,7 @@ class JobTemplate(DataModelMixin):
             :type project: id, required, default ``
             :param playbook: Playbook
             :type playbook: string, required, default ""
-            :param scm_branch: Branch to use in job run. Project default used if blank. 
+            :param scm_branch: Branch to use in job run. Project default used if blank.
                 Only allowed if project allow_override field is set to
             :type scm_branch: string, required, default ""
             :param forks: Forks
@@ -50,10 +50,10 @@ class JobTemplate(DataModelMixin):
             :type skip_tags: string, required, default ""
             :param start_at_task: Start at task
             :type start_at_task: string, required, default ""
-            :param timeout: The amount of time (in seconds) to run before the task is 
+            :param timeout: The amount of time (in seconds) to run before the task is
                 canceled.
             :type timeout: integer, required, default 0
-            :param use_fact_cache: If enabled, Tower will act as an Ansible Fact Cache Plugin; 
+            :param use_fact_cache: If enabled, Tower will act as an Ansible Fact Cache Plugin;
                 persisting facts at the end of a playbook run to the
             :type use_fact_cache: boolean, required, default False
             :param host_config_key: Host config key
@@ -82,15 +82,15 @@ class JobTemplate(DataModelMixin):
             :type survey_enabled: boolean, required, default False
             :param become_enabled: Become enabled
             :type become_enabled: boolean, required, default False
-            :param diff_mode: If enabled, textual changes made to any templated files on 
+            :param diff_mode: If enabled, textual changes made to any templated files on
                 the host are shown in the standard output
             :type diff_mode: boolean, required, default False
             :param allow_simultaneous: Allow simultaneous
             :type allow_simultaneous: boolean, required, default False
-            :param custom_virtualenv: Local absolute file path containing a custom Python 
+            :param custom_virtualenv: Local absolute file path containing a custom Python
                 virtualenv to use
             :type custom_virtualenv: string, required, default "None"
-            :param job_slice_count: The number of jobs to slice into at runtime. Will cause the 
+            :param job_slice_count: The number of jobs to slice into at runtime. Will cause the
                 Job Template to launch a workflow if value is greater than
             :type job_slice_count: integer, required, default 1
             :param webhook_service: Service that webhook requests will be accepted from
@@ -98,7 +98,7 @@ class JobTemplate(DataModelMixin):
                 | github: GitHub
                 | gitlab: GitLab
             :type webhook_service: choice, required, default ``
-            :param webhook_credential: Personal Access Token for posting back the status to the 
+            :param webhook_credential: Personal Access Token for posting back the status to the
                 service API
             :type webhook_credential: id, required, default ``
 
@@ -112,7 +112,7 @@ class JobTemplate(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this job template was created.
@@ -140,7 +140,7 @@ class JobTemplate(DataModelMixin):
             :type status: choice, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this job template."""
@@ -179,7 +179,7 @@ class JobTemplate(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -230,10 +230,7 @@ class JobTemplate(DataModelMixin):
 
     @job_type.setter
     def job_type(self, value):
-        allowed_values = [
-            "run",
-            "check"
-        ]
+        allowed_values = ["run", "check"]
         set_changes(self, "job_type", value, types.CHOICE, allowed_values)
 
     @property
@@ -265,7 +262,7 @@ class JobTemplate(DataModelMixin):
 
     @property
     def scm_branch(self):
-        """Branch to use in job run. Project default used if blank. Only allowed if project allow_override field is 
+        """Branch to use in job run. Project default used if blank. Only allowed if project allow_override field is
         set to true."""
         return self._data.get("scm_branch")
 
@@ -298,14 +295,7 @@ class JobTemplate(DataModelMixin):
 
     @verbosity.setter
     def verbosity(self, value):
-        allowed_values = [
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
-        ]
+        allowed_values = ["0", "1", "2", "3", "4", "5"]
         set_changes(self, "verbosity", value, types.CHOICE, allowed_values)
 
     @property
@@ -364,7 +354,7 @@ class JobTemplate(DataModelMixin):
 
     @property
     def use_fact_cache(self):
-        """If enabled, Tower will act as an Ansible Fact Cache Plugin; persisting facts at the end of a playbook run 
+        """If enabled, Tower will act as an Ansible Fact Cache Plugin; persisting facts at the end of a playbook run
         to the database and caching facts for use by Ansible."""
         return self._data.get("use_fact_cache")
 
@@ -563,7 +553,7 @@ class JobTemplate(DataModelMixin):
 
     @property
     def job_slice_count(self):
-        """The number of jobs to slice into at runtime. Will cause the Job Template to launch a workflow if value is 
+        """The number of jobs to slice into at runtime. Will cause the Job Template to launch a workflow if value is
         greater than 1."""
         return self._data.get("job_slice_count")
 
@@ -578,11 +568,7 @@ class JobTemplate(DataModelMixin):
 
     @webhook_service.setter
     def webhook_service(self, value):
-        allowed_values = [
-            "",
-            "github",
-            "gitlab"
-        ]
+        allowed_values = ["", "github", "gitlab"]
         set_changes(self, "webhook_service", value, types.CHOICE, allowed_values)
 
     @property
@@ -612,7 +598,7 @@ class Job(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this job was created.
@@ -656,12 +642,12 @@ class Job(DataModelMixin):
             :type canceled_on: datetime, readonly
             :param elapsed: Elapsed time in seconds that the job ran.
             :type elapsed: decimal, readonly
-            :param job_explanation: A status field to indicate the state of the job if it 
+            :param job_explanation: A status field to indicate the state of the job if it
                 wasn't able to run and capture stdout
             :type job_explanation: string, readonly
             :param execution_node: The node the job executed on.
             :type execution_node: string, readonly
-            :param controller_node: The instance that managed the isolated execution 
+            :param controller_node: The instance that managed the isolated execution
                 environment.
             :type controller_node: string, readonly
             :param job_type: Job type
@@ -675,7 +661,7 @@ class Job(DataModelMixin):
             :type project: id, readonly
             :param playbook: Playbook
             :type playbook: string, readonly
-            :param scm_branch: Branch to use in job run. Project default used if blank. 
+            :param scm_branch: Branch to use in job run. Project default used if blank.
                 Only allowed if project allow_override field is set to
             :type scm_branch: string, readonly
             :param forks: Forks
@@ -700,13 +686,13 @@ class Job(DataModelMixin):
             :type skip_tags: string, readonly
             :param start_at_task: Start at task
             :type start_at_task: string, readonly
-            :param timeout: The amount of time (in seconds) to run before the task is 
+            :param timeout: The amount of time (in seconds) to run before the task is
                 canceled.
             :type timeout: integer, readonly
-            :param use_fact_cache: If enabled, Tower will act as an Ansible Fact Cache Plugin; 
+            :param use_fact_cache: If enabled, Tower will act as an Ansible Fact Cache Plugin;
                 persisting facts at the end of a playbook run to the
             :type use_fact_cache: boolean, readonly
-            :param organization: The organization used to determine access to this unified 
+            :param organization: The organization used to determine access to this unified
                 job.
             :type organization: id, readonly
             :param job_template: Job template
@@ -717,18 +703,18 @@ class Job(DataModelMixin):
             :type allow_simultaneous: boolean, readonly
             :param artifacts: Artifacts
             :type artifacts: json, readonly
-            :param scm_revision: The SCM Revision from the Project used for this job, if 
+            :param scm_revision: The SCM Revision from the Project used for this job, if
                 available
             :type scm_revision: string, readonly
             :param instance_group: The Instance group the job was run under
             :type instance_group: id, readonly
-            :param diff_mode: If enabled, textual changes made to any templated files on 
+            :param diff_mode: If enabled, textual changes made to any templated files on
                 the host are shown in the standard output
             :type diff_mode: boolean, readonly
-            :param job_slice_number: If part of a sliced job, the ID of the inventory slice 
+            :param job_slice_number: If part of a sliced job, the ID of the inventory slice
                 operated on. If not part of sliced job, parameter is not
             :type job_slice_number: integer, readonly
-            :param job_slice_count: If ran as part of sliced jobs, the total number of slices. 
+            :param job_slice_count: If ran as part of sliced jobs, the total number of slices.
                 If 1, job is not part of a sliced job.
             :type job_slice_count: integer, readonly
             :param webhook_service: Service that webhook requests will be accepted from
@@ -736,7 +722,7 @@ class Job(DataModelMixin):
                 | github: GitHub
                 | gitlab: GitLab
             :type webhook_service: choice, readonly
-            :param webhook_credential: Personal Access Token for posting back the status to the 
+            :param webhook_credential: Personal Access Token for posting back the status to the
                 service API
             :type webhook_credential: id, readonly
             :param webhook_guid: Unique identifier of the event that triggered this webhook
@@ -749,7 +735,7 @@ class Job(DataModelMixin):
             :type job_env: json, readonly
             :param result_traceback: Result traceback
             :type result_traceback: string, readonly
-            :param event_processing_finished: Indicates whether all of the events generated by this 
+            :param event_processing_finished: Indicates whether all of the events generated by this
                 unified job have been saved to the database.
             :type event_processing_finished: boolean, readonly
             :param host_status_counts: A count of hosts uniquely assigned to each status.
@@ -760,7 +746,7 @@ class Job(DataModelMixin):
             :type custom_virtualenv: string, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this job."""
@@ -799,7 +785,7 @@ class Job(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -980,7 +966,7 @@ class Job(DataModelMixin):
 
     @property
     def scm_branch(self):
-        """Branch to use in job run. Project default used if blank. Only allowed if project allow_override field is 
+        """Branch to use in job run. Project default used if blank. Only allowed if project allow_override field is
         set to true."""
         return self._data.get("scm_branch")
 
@@ -1071,7 +1057,7 @@ class Job(DataModelMixin):
 
     @property
     def use_fact_cache(self):
-        """If enabled, Tower will act as an Ansible Fact Cache Plugin; persisting facts at the end of a playbook run 
+        """If enabled, Tower will act as an Ansible Fact Cache Plugin; persisting facts at the end of a playbook run
         to the database and caching facts for use by Ansible."""
         return self._data.get("use_fact_cache")
 
@@ -1153,7 +1139,7 @@ class Job(DataModelMixin):
 
     @property
     def job_slice_number(self):
-        """If part of a sliced job, the ID of the inventory slice operated on. If not part of sliced job, parameter 
+        """If part of a sliced job, the ID of the inventory slice operated on. If not part of sliced job, parameter
         is not used."""
         return self._data.get("job_slice_number")
 
@@ -1287,7 +1273,7 @@ class JobEvent(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this job event was created.
@@ -1369,7 +1355,7 @@ class JobEvent(DataModelMixin):
             :type verbosity: integer, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this job event."""
@@ -1408,7 +1394,7 @@ class JobEvent(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -1632,7 +1618,7 @@ class SystemJob(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this system job was created.
@@ -1676,7 +1662,7 @@ class SystemJob(DataModelMixin):
             :type canceled_on: datetime, readonly
             :param elapsed: Elapsed time in seconds that the job ran.
             :type elapsed: decimal, readonly
-            :param job_explanation: A status field to indicate the state of the job if it 
+            :param job_explanation: A status field to indicate the state of the job if it
                 wasn't able to run and capture stdout
             :type job_explanation: string, readonly
             :param execution_node: The node the job executed on.
@@ -1702,12 +1688,12 @@ class SystemJob(DataModelMixin):
             :type job_env: json, readonly
             :param result_traceback: Result traceback
             :type result_traceback: string, readonly
-            :param event_processing_finished: Indicates whether all of the events generated by this 
+            :param event_processing_finished: Indicates whether all of the events generated by this
                 unified job have been saved to the database.
             :type event_processing_finished: boolean, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this system job."""
@@ -1746,7 +1732,7 @@ class SystemJob(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -1979,7 +1965,7 @@ class SystemJobTemplate(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this system job template was created.
@@ -2020,7 +2006,7 @@ class SystemJobTemplate(DataModelMixin):
             :type job_type: choice, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this system job template."""
@@ -2059,7 +2045,7 @@ class SystemJobTemplate(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -2165,7 +2151,7 @@ class Schedule(DataModelMixin):
             :type description: string, required, default ""
             :param extra_data: Extra data
             :type extra_data: json, required, default "{}"
-            :param inventory: Inventory applied as a prompt, assuming job template 
+            :param inventory: Inventory applied as a prompt, assuming job template
                 prompts for inventory
             :type inventory: id, required, default ``
             :param scm_branch: Scm branch
@@ -2208,17 +2194,17 @@ class Schedule(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param created: Timestamp when this schedule was created.
             :type created: datetime, readonly
             :param modified: Timestamp when this schedule was last modified.
             :type modified: datetime, readonly
-            :param dtstart: The first occurrence of the schedule occurs on or after 
+            :param dtstart: The first occurrence of the schedule occurs on or after
                 this time.
             :type dtstart: datetime, readonly
-            :param dtend: The last occurrence of the schedule occurs before this 
+            :param dtend: The last occurrence of the schedule occurs before this
                 time, aftewards the schedule expires.
             :type dtend: datetime, readonly
             :param next_run: The next time that the scheduled action will run.
@@ -2229,7 +2215,7 @@ class Schedule(DataModelMixin):
             :type until: field, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def rrule(self):
         """A value representing the schedules iCal recurrence rule."""
@@ -2277,7 +2263,7 @@ class Schedule(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -2355,12 +2341,7 @@ class Schedule(DataModelMixin):
 
     @job_type.setter
     def job_type(self, value):
-        allowed_values = [
-            "None",
-            "",
-            "run",
-            "check"
-        ]
+        allowed_values = ["None", "", "run", "check"]
         set_changes(self, "job_type", value, types.CHOICE, allowed_values)
 
     @property
@@ -2406,15 +2387,7 @@ class Schedule(DataModelMixin):
 
     @verbosity.setter
     def verbosity(self, value):
-        allowed_values = [
-            "None",
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"
-        ]
+        allowed_values = ["None", "0", "1", "2", "3", "4", "5"]
         set_changes(self, "verbosity", value, types.CHOICE, allowed_values)
 
     @property
@@ -2498,7 +2471,7 @@ class ActivityStream(DataModelMixin):
             :type url: string, readonly
             :param related: Data structure with URLs of related resources.
             :type related: object, readonly
-            :param summary_fields: Data structure with name/description for related resources. 
+            :param summary_fields: Data structure with name/description for related resources.
                  The output for some objects may be limited for performance
             :type summary_fields: object, readonly
             :param timestamp: Timestamp
@@ -2510,27 +2483,27 @@ class ActivityStream(DataModelMixin):
                 | associate: Entity Associated with another Entity
                 | disassociate: Entity was Disassociated with another Entity
             :type operation: choice, readonly
-            :param changes: A summary of the new and changed values when an object is 
+            :param changes: A summary of the new and changed values when an object is
                 created, updated, or deleted
             :type changes: json, readonly
-            :param object1: For create, update, and delete events this is the object 
-                type that was affected. For associate and disassociate 
+            :param object1: For create, update, and delete events this is the object
+                type that was affected. For associate and disassociate
                 d
             :type object1: string, readonly
-            :param object2: Unpopulated for create, update, and delete events. For 
+            :param object2: Unpopulated for create, update, and delete events. For
                 associate and disassociate events this is the object type
             :type object2: string, readonly
-            :param object_association: When present, shows the field name of the role or 
+            :param object_association: When present, shows the field name of the role or
                 relationship that changed.
             :type object_association: field, readonly
             :param action_node: The cluster node the activity took place on.
             :type action_node: string, readonly
-            :param object_type: When present, shows the model on which the role or 
+            :param object_type: When present, shows the model on which the role or
                 relationship was defined.
             :type object_type: field, readonly
         """
         super().__init__(**kwargs)
-    
+
     @property
     def id(self):
         """Database ID for this activity stream."""
@@ -2569,7 +2542,7 @@ class ActivityStream(DataModelMixin):
 
     @property
     def summary_fields(self):
-        """Data structure with name/description for related resources.  The output for some objects may be limited 
+        """Data structure with name/description for related resources.  The output for some objects may be limited
         for performance reasons."""
         return self._data.get("summary_fields")
 
@@ -2606,8 +2579,9 @@ class ActivityStream(DataModelMixin):
 
     @property
     def object1(self):
-        """For create, update, and delete events this is the object type that was affected. For associate and 
-        disassociate events this is the object type associated or disassociated with object2."""
+        """For create, update, and delete events this is the object type that was affected. For associate and
+        disassociate events this is the object type associated or disassociated with object2.
+        """
         return self._data.get("object1")
 
     @object1.setter
@@ -2616,7 +2590,7 @@ class ActivityStream(DataModelMixin):
 
     @property
     def object2(self):
-        """Unpopulated for create, update, and delete events. For associate and disassociate events this is the 
+        """Unpopulated for create, update, and delete events. For associate and disassociate events this is the
         object type that object1 is being associated with."""
         return self._data.get("object2")
 
